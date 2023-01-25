@@ -31,6 +31,23 @@ Check support by the following the command
 ```
 If it does not detect x86_64_v3 support do not install the kernel. Otherwise you will end up with a non-functioning operating system! 
 
+### Installation instructions: 
+
+```
+sudo dnf copr enable bieszczaders/kernel-cachyos
+```
+
+and next
+
+```
+sudo dnf install kernel-cachyos-bore
+```
+
+OR
+```
+sudo dnf install kernel-cachyos-bore-lto
+```
+
 ### Install drivers for lto kernel
 If you build external modules (e.g. for Nvidia graphics card drivers) and use the -lto kernel, you need to install the following dependencies:
 ```
