@@ -69,5 +69,5 @@ cd %{name}-%{version}
 * Mon Jan 30 2023 lucjan - 1.0.0-2
 - Fix debug files
 
-* Mon Jan 30 2023 sirlucjan - 1.0.0-1
+* Mon Jan 30 2023 lucjan - 1.0.0-1
 - Add uksmd for Fedora
