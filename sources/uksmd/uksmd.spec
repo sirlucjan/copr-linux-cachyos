@@ -1,3 +1,12 @@
+### The author of uksmd
+# Oleksandr Natalenko <oleksandr@natalenko.name>
+### The authors of linux-cachyos port:
+# Piotr Gorski sirlucjan <piotrgorski@cachyos.org>
+# Damian N. <nycko123@gmail.com>
+### The port maintainer for Fedora:
+# bieszczaders <zbyszek@linux.pl>
+# https://copr.fedorainfracloud.org/coprs/bieszczaders/
+
 %define _disable_source_fetch 0
 
 Name:           uksmd
@@ -6,8 +15,6 @@ Version:        1.0.0
 Release:        3%{?dist}
 License:        GPLv3
 URL:            https://github.com/CachyOS/uksmd
-
-
 Source0:        https://github.com/CachyOS/uksmd/archive/v%{version}.tar.gz
 
 BuildRequires:  meson
