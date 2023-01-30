@@ -1,12 +1,14 @@
+%define _disable_source_fetch 0
+
 Name:           uksmd
 Summary:        Userspace KSM helper daemon (CachyOS branding)
 Version:        1.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv3
 URL:            https://github.com/CachyOS/uksmd
 
 
-Source0:        %{name}-%{version}.tar.gz
+Source0:        https://github.com/CachyOS/uksmd/archive/v%{version}.tar.gz
 
 BuildRequires:  meson
 BuildRequires:  gcc
@@ -47,6 +49,9 @@ cd %{name}-%{version}
 /usr/share/licenses/uksmd/LICENSE
 
 %changelog
+* Mon Jan 30 2023 lucjan - 1.0.0-3
+- Fix download bug
+
 * Mon Jan 30 2023 lucjan - 1.0.0-2
 - Fix debug files
 
