@@ -141,6 +141,9 @@ cp config .config
 find . -name "localversion*" -delete
 scripts/config -u LOCALVERSION
 
+# Enable CachyOS tweaks
+scripts/config -e CACHY
+
 # Enable BORE Scheduler
 scripts/config -e SCHED_BORE
 
