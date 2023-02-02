@@ -52,7 +52,7 @@ Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.1/misc
 Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.1/sched/0001-bore-cachy.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
 %define debug_package %{nil}
-BuildRequires: python3-devel python3 make perl-generators perl-interpreter openssl-devel bison flex findutils git-core perl-devel openssl elfutils-devel gawk binutils m4 tar hostname bzip2 bash gzip xz bc diffutils redhat-rpm-config net-tools elfutils patch rpm-build dwarves kmod libkcapi-hmaccalc perl-Carp rsync grubby wget clang clang-devel llvm lld 
+BuildRequires: python3-devel python3 make perl-generators perl-interpreter openssl-devel bison flex findutils git-core perl-devel openssl elfutils-devel gawk binutils m4 tar hostname bzip2 bash gzip xz bc diffutils redhat-rpm-config net-tools elfutils patch rpm-build dwarves kmod libkcapi-hmaccalc perl-Carp rsync grubby wget clang clang-devel llvm lld
 %if %{llvm_kbuild}
 BuildRequires: llvm%{_isa} lld%{_isa} clang%{_isa}
 %else
@@ -258,7 +258,7 @@ make %{?_smp_mflags} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
 
 # prepare -devel files
 ### all of the things here are derived from the Fedora kernel.spec
-### see 
+### see
 ##### https://src.fedoraproject.org/rpms/kernel/blob/rawhide/f/kernel.spec
 rm -f %{buildroot}/lib/modules/%{kverstr}/build
 rm -f %{buildroot}/lib/modules/%{kverstr}/source
@@ -280,7 +280,7 @@ cp System.map %{buildroot}/lib/modules/%{kverstr}/build
 if [ -s Module.markers ]; then
 cp Module.markers %{buildroot}/lib/modules/%{kverstr}/build
 fi
- 
+
 # create the kABI metadata for use in packaging
 # NOTENOTE: the name symvers is used by the rpm backend
 # NOTENOTE: to discover and run the /usr/lib/rpm/fileattrs/kabi.attr
@@ -298,7 +298,7 @@ cp .config %{buildroot}/lib/modules/%{kverstr}/build
 cp -a scripts %{buildroot}/lib/modules/%{kverstr}/build
 rm -rf %{buildroot}/lib/modules/%{kverstr}/build/scripts/tracing
 rm -f %{buildroot}/lib/modules/%{kverstr}/build/scripts/spdxcheck.py
- 
+
 %ifarch s390x
 # CONFIG_EXPOLINE_EXTERN=y produces arch/s390/lib/expoline/expoline.o
 # which is needed during external module build.
@@ -306,7 +306,7 @@ if [ -f arch/s390/lib/expoline/expoline.o ]; then
 cp -a --parents arch/s390/lib/expoline/expoline.o %{buildroot}/lib/modules/%{kverstr}/build
 fi
 %endif
- 
+
 # Files for 'make scripts' to succeed with kernel-devel.
 mkdir -p %{buildroot}/lib/modules/%{kverstr}/build/security/selinux/include
 cp -a --parents security/selinux/include/classmap.h %{buildroot}/lib/modules/%{kverstr}/build
@@ -314,7 +314,7 @@ cp -a --parents security/selinux/include/initial_sid_to_string.h %{buildroot}/li
 mkdir -p %{buildroot}/lib/modules/%{kverstr}/build/tools/include/tools
 cp -a --parents tools/include/tools/be_byteshift.h %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/include/tools/le_byteshift.h %{buildroot}/lib/modules/%{kverstr}/build
- 
+
 # Files for 'make prepare' to succeed with kernel-devel.
 cp -a --parents tools/include/linux/compiler* %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/include/linux/types.h %{buildroot}/lib/modules/%{kverstr}/build
@@ -323,10 +323,10 @@ cp --parents tools/build/Build %{buildroot}/lib/modules/%{kverstr}/build
 cp --parents tools/build/fixdep.c %{buildroot}/lib/modules/%{kverstr}/build
 cp --parents tools/objtool/sync-check.sh %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/bpf/resolve_btfids %{buildroot}/lib/modules/%{kverstr}/build
- 
+
 cp --parents security/selinux/include/policycap_names.h %{buildroot}/lib/modules/%{kverstr}/build
 cp --parents security/selinux/include/policycap.h %{buildroot}/lib/modules/%{kverstr}/build
- 
+
 cp -a --parents tools/include/asm-generic %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/include/linux %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/include/uapi/asm %{buildroot}/lib/modules/%{kverstr}/build
@@ -378,7 +378,7 @@ fi
 # include a few files for 'make prepare'
 cp -a --parents arch/arm/tools/gen-mach-types %{buildroot}/lib/modules/%{kverstr}/build/
 cp -a --parents arch/arm/tools/mach-types %{buildroot}/lib/modules/%{kverstr}/build/
- 
+
 %endif
 cp -a include %{buildroot}/lib/modules/%{kverstr}/build/include
 
@@ -398,21 +398,21 @@ cp -a --parents arch/x86/purgatory/entry64.S %{buildroot}/lib/modules/%{kverstr}
 cp -a --parents arch/x86/boot/string.h %{buildroot}/lib/modules/%{kverstr}/build/
 cp -a --parents arch/x86/boot/string.c %{buildroot}/lib/modules/%{kverstr}/build/
 cp -a --parents arch/x86/boot/ctype.h %{buildroot}/lib/modules/%{kverstr}/build/
- 
+
 cp -a --parents scripts/syscalltbl.sh %{buildroot}/lib/modules/%{kverstr}/build/
 cp -a --parents scripts/syscallhdr.sh %{buildroot}/lib/modules/%{kverstr}/build/
- 
+
 cp -a --parents tools/arch/x86/include/asm %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/arch/x86/include/uapi/asm %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/objtool/arch/x86/lib %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/arch/x86/lib/ %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/arch/x86/tools/gen-insn-attr-x86.awk %{buildroot}/lib/modules/%{kverstr}/build
 cp -a --parents tools/objtool/arch/x86/ %{buildroot}/lib/modules/%{kverstr}/build
- 
+
 %endif
 # Clean up intermediate tools files
 find %{buildroot}/lib/modules/%{kverstr}/build/tools \( -iname "*.o" -o -iname "*.cmd" \) -exec rm -f {} +
- 
+
 # Make sure the Makefile, version.h, and auto.conf have a matching
 # timestamp so that external modules can be built
 touch -r %{buildroot}/lib/modules/%{kverstr}/build/Makefile \
@@ -420,15 +420,15 @@ touch -r %{buildroot}/lib/modules/%{kverstr}/build/Makefile \
 %{buildroot}/lib/modules/%{kverstr}/build/include/config/auto.conf
 
 find %{buildroot}/lib/modules/%{kverstr} -name "*.ko" -type f >modnames
- 
+
 # mark modules executable so that strip-to-file can strip them
 xargs --no-run-if-empty chmod u+x < modnames
- 
+
 # Generate a list of modules for block and networking.
- 
+
 grep -F /drivers/ modnames | xargs --no-run-if-empty nm -upA |
 sed -n 's,^.*/\([^/]*\.ko\):  *U \(.*\)$,\1 \2,p' > drivers.undef
- 
+
 collect_modules_list()
 {
   sed -r -n -e "s/^([^ ]+) \\.?($2)\$/\\1/p" drivers.undef |
@@ -437,7 +437,7 @@ LC_ALL=C sort -u > %{buildroot}/lib/modules/%{kverstr}/modules.$1
 sed -r -e "/^($3)\$/d" -i %{buildroot}/lib/modules/%{kverstr}/modules.$1
   fi
 }
- 
+
 collect_modules_list networking \
   'register_netdev|ieee80211_register_hw|usbnet_probe|phy_driver_register|rt(l_|2x00)(pci|usb)_probe|register_netdevice'
 collect_modules_list block \
@@ -446,11 +446,11 @@ collect_modules_list drm \
   'drm_open|drm_init'
 collect_modules_list modesetting \
   'drm_crtc_init'
- 
+
 # detect missing or incorrect license tags
 ( find %{buildroot}/lib/modules/%{kverstr} -name '*.ko' | xargs /sbin/modinfo -l | \
 grep -E -v 'GPL( v2)?$|Dual BSD/GPL$|Dual MPL/GPL$|GPL and additional rights$' ) && exit 1
- 
+
 remove_depmod_files()
 {
 # remove files that will be auto generated by depmod at rpm -i time
@@ -459,18 +459,18 @@ rm -f modules.{alias,alias.bin,builtin.alias.bin,builtin.bin} \
   modules.{dep,dep.bin,devname,softdep,symbols,symbols.bin}
 popd
 }
- 
+
 remove_depmod_files
 
 mkdir -p %{buildroot}%{_prefix}/src/kernels
 mv %{buildroot}/lib/modules/%{kverstr}/build %{buildroot}%{_prefix}/src/kernels/%{kverstr}
- 
+
 # This is going to create a broken link during the build, but we don't use
 # it after this point.  We need the link to actually point to something
 # when kernel-devel is installed, and a relative link doesn't work across
 # the F17 UsrMove feature.
-ln -sf %{_prefix}/src/kernels/%{kverstr} %{buildroot}/lib/modules/%{kverstr}/build	
-	
+ln -sf %{_prefix}/src/kernels/%{kverstr} %{buildroot}/lib/modules/%{kverstr}/build
+
 find %{buildroot}%{_prefix}/src/kernels -name ".*.cmd" -delete
 #
 
@@ -511,7 +511,7 @@ if [ -f /etc/sysconfig/kernel ]
 then
 . /etc/sysconfig/kernel || exit $?
 fi
-if [ "$HARDLINK" != "no" -a -x /usr/bin/hardlink -a ! -e /run/ostree-booted ] 
+if [ "$HARDLINK" != "no" -a -x /usr/bin/hardlink -a ! -e /run/ostree-booted ]
 then
 (cd /usr/src/kernels/%{kverstr} &&
  /usr/bin/find . -type f | while read f; do
@@ -563,4 +563,4 @@ fi
 
 %files devel-matched
 
-%files 
+%files
