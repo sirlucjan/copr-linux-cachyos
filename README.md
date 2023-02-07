@@ -20,7 +20,7 @@
 - Latest BTRFS/XFS/EXT4 improvements & fixes.
 - AMD PSTATE EPP Driver enabled by default and with enhancements patches/fixes.
 - Clearlinux Patchset.
-- Futex fixes and winesync is available.
+- Futex fixes is available.
 - UserKSM daemon from pf.
 
 ### Checking for the cpu support
