@@ -11,8 +11,8 @@
 
 Name:           uksmd
 Summary:        Userspace KSM helper daemon (CachyOS branding)
-Version:        1.0.0
-Release:        4%{?dist}
+Version:        1.1.0
+Release:        1%{?dist}
 License:        GPLv3
 URL:            https://github.com/CachyOS/uksmd
 Source0:        %url/archive/v%{version}.tar.gz
@@ -60,6 +60,9 @@ cd %{name}-%{version}
 /usr/share/licenses/uksmd/LICENSE
 
 %changelog
+* Thu Feb 09 2023 lucjan - 1.1.0-2
+- Update to 1.1.0
+
 * Mon Jan 30 2023 lucjan - 1.0.0-4
 - Improve spec file
 
@@ -71,3 +74,4 @@ cd %{name}-%{version}
 
 * Mon Jan 30 2023 lucjan - 1.0.0-1
 - Add uksmd for Fedora
+
