@@ -60,7 +60,7 @@ cd %{name}-%{version}
 /usr/share/licenses/uksmd/LICENSE
 
 %changelog
-* Thu Feb 09 2023 lucjan - 1.1.0-2
+* Thu Feb 09 2023 lucjan - 1.1.0-1
 - Update to 1.1.0
 
 * Mon Jan 30 2023 lucjan - 1.0.0-4
