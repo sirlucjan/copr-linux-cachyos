@@ -29,8 +29,8 @@
 Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-BORE Patches
 
-%define _basekver 6.1
-%define _stablekver 12
+%define _basekver 6.2
+#%define _stablekver 0
 Version: %{_basekver}.%{_stablekver}
 
 %define customver 1
@@ -46,7 +46,8 @@ License: GPLv2 and Redistributable, no modifications permitted
 Group: System Environment/Kernel
 Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
-Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
+#Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
+Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.1/all/0001-cachyos-base-all.patch
 Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.1/misc/0001-Add-latency-priority-for-CFS-class.patch
 Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.1/sched/0001-bore-cachy.patch
