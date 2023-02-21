@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-BORE Patches
 #%define _stablekver 0
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 3
+%define customver 5
 %define flaver cb%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -220,6 +220,9 @@ scripts/config -e PREEMPT_DYNAMIC
 
 # Unset hostname
 scripts/config -u DEFAULT_HOSTNAME
+
+# Attempting to fix boot error (https://github.com/CachyOS/linux-cachyos/issues/82)
+scripts/config -e EFI_HANDOVER_PROTOCOL
 
 # Set kernel version string as build salt
 scripts/config --set-str BUILD_SALT "%{kverstr}"
