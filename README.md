@@ -22,6 +22,11 @@
 - Clearlinux Patchset.
 - Futex fixes is available.
 - UserKSM daemon from pf.
+- OpenRGB and ACS Override support.
+- HDR Patches for AMD GPU's and gamescope
+- KVM Performance Improvement from Yu Zhao
+- Objtool Patches to reduce the memory usage
+- (NEW!) Default support for Steam Deck.
 
 ### Checking for the cpu support
 Check support by the following the command
