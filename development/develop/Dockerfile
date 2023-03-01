@@ -5,5 +5,4 @@ RUN dnf -y install git rpmdevtools && \
     cd copr-linux-cachyos/sources/kernel-cachyos-bore && \
     git checkout develop && \
     rpmdev-setuptree && \
-    rpmbuild -bs --target=x86_64 kernel-cachyos-bore.spec && \
-    rpmbuild -bs --target=x86_64 kernel-cachyos-bore-lto.spec
+    rpmbuild -bs --target=x86_64 kernel-cachyos-*.spec
