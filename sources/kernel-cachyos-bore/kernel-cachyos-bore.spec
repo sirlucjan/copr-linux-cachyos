@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-BORE Patches
 %define _stablekver 2
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 2
 %define flaver cb%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -223,6 +223,9 @@ scripts/config -u DEFAULT_HOSTNAME
 
 # Attempting to fix boot error (https://github.com/CachyOS/linux-cachyos/issues/82)
 scripts/config -e EFI_HANDOVER_PROTOCOL
+
+# Enable SELinix (https://github.com/sirlucjan/copr-linux-cachyos/pull/1)
+scripts/config --set-str CONFIG_LSM “lockdown,yama,integrity,selinux,bpf,landlock”
 
 # Set kernel version string as build salt
 scripts/config --set-str BUILD_SALT "%{kverstr}"
