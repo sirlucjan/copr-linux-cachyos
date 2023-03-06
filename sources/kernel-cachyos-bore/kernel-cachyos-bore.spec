@@ -221,9 +221,6 @@ scripts/config -e PREEMPT_DYNAMIC
 # Unset hostname
 scripts/config -u DEFAULT_HOSTNAME
 
-# Attempting to fix boot error (https://github.com/CachyOS/linux-cachyos/issues/82)
-scripts/config -e EFI_HANDOVER_PROTOCOL
-
 # Enable SELinix (https://github.com/sirlucjan/copr-linux-cachyos/pull/1)
 scripts/config --set-str CONFIG_LSM “lockdown,yama,integrity,selinux,bpf,landlock”
 
