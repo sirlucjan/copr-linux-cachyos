@@ -221,7 +221,7 @@ scripts/config -e PREEMPT_DYNAMIC
 # Unset hostname
 scripts/config -u DEFAULT_HOSTNAME
 
-# Enable SELinix (https://github.com/sirlucjan/copr-linux-cachyos/pull/1)
+# Enable SELinux (https://github.com/sirlucjan/copr-linux-cachyos/pull/1)
 scripts/config --set-str CONFIG_LSM “lockdown,yama,integrity,selinux,bpf,landlock”
 
 # Set kernel version string as build salt
