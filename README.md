@@ -8,7 +8,7 @@
 ### linux-cachyos-bore uses as default the BORE scheduler
 - BORE (Burst-Oriented Response Enhancer) CPU Scheduler by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler)
 
-### Features
+### Features:
 - Choose between `LLVM/LTO` or `GCC`.
 - AMD PSTATE EPP and AMD PSTATE Guided Driver enabled by default and with enhancements patches/fixes.
 - Latency Nice Patchset included usuage with `ananicy-cpp` [feature branch](https://lore.kernel.org/lkml/20220925143908.10846-1-vincent.guittot@linaro.org/T/#t).
@@ -61,6 +61,8 @@ dnf install clang clang-devel llvm lld
 ```
 
 # UKSMD
+
+Check description [here](https://github.com/CachyOS/uksmd).
 
 ### Installation instructions:
 
