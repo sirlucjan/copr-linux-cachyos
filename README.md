@@ -29,7 +29,7 @@
 - maple-tree and MG-LRU fixes from upstream.
 - (NEW!) Default support for Steam Deck.
 
-### Checking for the cpu support
+### Checking for the cpu support:
 Check support by the following the command
 ```
 /lib64/ld-linux-x86-64.so.2 --help | grep "(supported, searched)"
@@ -54,7 +54,7 @@ OR
 sudo dnf install kernel-cachyos-bore-lto
 ```
 
-### Install drivers for lto kernel
+### Install drivers for lto kernel:
 If you build external modules (e.g. for Nvidia graphics card drivers) and use the -lto kernel, you need to install the following dependencies:
 ```
 dnf install clang clang-devel llvm lld
@@ -68,25 +68,25 @@ dnf install clang clang-devel llvm lld
 sudo dnf copr enable bieszczaders/kernel-cachyos-addons
 ```
 
-### Install required packages
+### Install required packages:
 
 ```
 sudo dnf install libcap-ng libcap-ng-devel procps-ng procps-ng-devel
 ```
 
-### Install UKSMD
+### Install UKSMD:
 
 ```
 sudo dnf install uksmd
 ```
 
-### Enable UKSMD
+### Enable UKSMD:
 
 ```
 sudo systemd enable uksmd && sudo systemd start uksmd
 ```
 
-### Checking the correct operation of the uksmd
+### Checking the correct operation of the uksmd:
 
 ```
 systemctl status uksmd
