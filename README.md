@@ -15,16 +15,17 @@
 - Latest & improved ZSTD 1.5.4 patch-set.
 - UserKSM daemon from pf.
 - Improved BFQ Scheduler.
-- zram patches from upstream
+- zram patches from upstream.
 - Clearlinux Patchset.
 - Back-ported patches from `linux-next`.
 - Scheduler patches from linux-next/tip.
 - General improved sysctl settings and upstream scheduler fixes.
 - OpenRGB and ACS Override support.
-- HDR Patches for AMD GPU's and gamescope
-- KVM Performance Improvement from Yu Zhao
-- Objtool Patches to reduce the memory usage
-- maple-tree and MG-LRU fixes from upstream
+- HDR Patches for AMD GPU's and gamescope.
+- KVM Performance Improvement from Yu Zhao.
+- Objtool Patches to reduce the memory usage.
+- maple-tree and MG-LRU fixes from upstream.
+- (NEW!) Default support for Steam Deck.
 
 ### Checking for the cpu support
 Check support by the following the command
