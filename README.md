@@ -3,6 +3,8 @@
   <h1 align="center">linux-cachyos-bore for Fedora</h1>
 </div>
 
+# KERNEL
+
 ### linux-cachyos-bore uses as default the BORE scheduler
 - BORE (Burst-Oriented Response Enhancer) CPU Scheduler by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler)
 
@@ -35,7 +37,7 @@ Check support by the following the command
 ```
 If it does not detect x86_64_v3 support do not install the kernel. Otherwise you will end up with a non-functioning operating system! 
 
-### Installation instructions: 
+### Installation instructions:
 
 ```
 sudo dnf copr enable bieszczaders/kernel-cachyos
@@ -58,3 +60,40 @@ If you build external modules (e.g. for Nvidia graphics card drivers) and use th
 dnf install clang clang-devel llvm lld
 ```
 
+# UKSMD
+
+### Installation instructions:
+
+```
+sudo dnf copr enable bieszczaders/kernel-cachyos-addons
+```
+
+### Install required packages
+
+```
+sudo dnf install libcap-ng libcap-ng-devel procps-ng procps-ng-devel
+```
+
+### Install UKSMD
+
+```
+sudo dnf install uksmd
+```
+
+### Enable UKSMD
+
+```
+sudo systemd enable uksmd && sudo systemd start uksmd
+```
+
+### Checking the correct operation of the uksmd
+
+```
+systemctl status uksmd
+```
+
+and
+
+```
+uksmdstats
+```
