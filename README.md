@@ -14,7 +14,7 @@
 - Latency Nice Patchset included usuage with `ananicy-cpp` [feature branch](https://lore.kernel.org/lkml/20220925143908.10846-1-vincent.guittot@linaro.org/T/#t).
 - RCU fixes and improvements.
 - Latest BTRFS/XFS/EXT4 improvements & fixes.
-- Latest & improved ZSTD 1.5.4 patch-set.
+- Latest & improved ZSTD 1.5.5 patch-set.
 - UserKSM daemon from pf.
 - Improved BFQ Scheduler.
 - zram patches from upstream.
