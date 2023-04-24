@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-BORE Patches
 #%define _stablekver 0
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 2
 %define flaver cb%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -158,6 +158,10 @@ scripts/config --set-val HZ 500
 scripts/config -e LRU_GEN
 scripts/config -e LRU_GEN_ENABLED
 scripts/config -d LRU_GEN_STATS
+
+# Enable PER_VMA_LOCK
+scripts/config -e PER_VMA_LOCK
+scripts/config -d PER_VMA_LOCK_STATS
 
 # Enabling better ZSTD modules and kernel compression ratio
 scripts/config --set-val MODULE_COMPRESS_ZSTD_LEVEL 19
