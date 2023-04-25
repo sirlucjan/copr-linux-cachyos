@@ -26,7 +26,7 @@
 - HDR Patches for AMD GPU's and gamescope.
 - maple-tree and MG-LRU fixes from upstream.
 - Default support for Steam Deck.
-- [per VMA lock](https://lore.kernel.org/lkml/20230109205336.3665937-1-surenb@google.com/T/#ma04517b963591298a9eb76d96d2c453256a4d9ab).
+- [per VMA lock](https://lwn.net/Articles/924572/).
 
 ### Checking for the cpu support:
 Check support by the following the command
