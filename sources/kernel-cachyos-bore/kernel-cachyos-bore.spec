@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-BORE Patches
 #%define _stablekver 0
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 4
+%define customver 5
 %define flaver cb%{customver}
 
 Release:%{flaver}.0%{?dist}
