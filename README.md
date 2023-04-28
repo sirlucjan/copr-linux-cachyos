@@ -24,9 +24,8 @@
 - General improved sysctl settings and upstream scheduler fixes.
 - OpenRGB and ACS Override support.
 - HDR Patches for AMD GPU's and gamescope.
-- maple-tree and MG-LRU fixes from upstream.
 - Default support for Steam Deck.
-- [per VMA lock](https://lwn.net/Articles/924572/) - *default disabled*.
+- [per VMA lock](https://lwn.net/Articles/924572/).
 
 ### Checking for the cpu support:
 Check support by the following the command
