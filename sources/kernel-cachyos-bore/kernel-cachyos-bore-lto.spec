@@ -134,7 +134,7 @@ patch -p1 -i %{PATCH1}
 patch -p1 -i %{PATCH2}
 
 # Patch the config file
-wget https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-bore/config
+wget https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-bore/config
 cp config .config
 
 # Remove CachyOS's localversion
