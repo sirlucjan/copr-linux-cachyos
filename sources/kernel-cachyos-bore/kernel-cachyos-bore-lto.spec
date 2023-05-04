@@ -129,7 +129,7 @@ This meta package is used to install matching core and devel packages for a give
 # Extract cachyos-base patch and apply to tree
 patch -p1 -i %{PATCH0}
 
-# Extract bore-cachy patch and apply to tree
+# Extract eevdf-bore-cachy patch and apply to tree
 patch -p1 -i %{PATCH1}
 patch -p1 -i %{PATCH2}
 
