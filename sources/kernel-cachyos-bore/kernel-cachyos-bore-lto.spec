@@ -27,13 +27,13 @@
 
 %define flavor cachyos-bore-lto
 Name: kernel%{?flavor:-%{flavor}}
-Summary: The Linux Kernel with Cachyos-BORE Patches
+Summary: The Linux Kernel with Cachyos-EEVDF-BORE Patches
 
 %define _basekver 6.3
 %define _stablekver 1
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 2
+%define customver 3
 %define flaver cbl%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -48,8 +48,8 @@ Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
 Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
-Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/0001-bore-tuning-sysctl.patch
-Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
+Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF.patch
+Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-eevdf.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
 %define debug_package %{nil}
 BuildRequires: python3-devel python3 make perl-generators perl-interpreter openssl-devel bison flex findutils git-core perl-devel openssl elfutils-devel gawk binutils m4 tar hostname bzip2 bash gzip xz bc diffutils redhat-rpm-config net-tools elfutils patch rpm-build dwarves kmod libkcapi-hmaccalc perl-Carp rsync grubby wget clang clang-devel llvm lld
