@@ -39,18 +39,18 @@ Only long-living tasks are hinted (those that were launched more than 10 seconds
 This requires pmadv_ksm() syscall, which is available in linux-cachyos-bore/linux-cachyos-bore-lto kernels.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{version}-rc1
 %autosetup -c
 
 %build
-cd %{name}-%{version}
+cd %{name}-%{version}-rc1
 # Decreasing the meson version to satisfy dependencies
 sed -i 's/0.64.0/0.63.3/g' meson.build
 %meson
 %meson_build
 
 %install
-cd %{name}-%{version}
+cd %{name}-%{version}-rc1
 %meson_install
 
 %files
