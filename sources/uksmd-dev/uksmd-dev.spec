@@ -11,11 +11,11 @@
 
 Name:           uksmd
 Summary:        Userspace KSM helper daemon (CachyOS branding)
-Version:        1.2.0-rc1
-Release:        2%{?dist}
+Version:        1.2.0
+Release:        1%{?dist}
 License:        GPLv3
 URL:            https://github.com/CachyOS/uksmd
-Source0:        %url/archive/v%{version}.tar.gz
+Source0:        %url/archive/v%{version}-rc1.tar.gz
 
 BuildRequires:  meson
 BuildRequires:  gcc
