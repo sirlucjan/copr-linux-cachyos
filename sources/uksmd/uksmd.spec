@@ -31,6 +31,7 @@ Requires:       libcap-ng
 Requires:       libcap-ng-devel
 Requires:       procps-ng
 Requires:       procps-ng-devel
+Conflicts:      uksmd-dev
 %description
 The daemon goes through the list of userspace tasks (once per 5 seconds) and hints them to apply MADV_MERGEABLE to
 anonymous mappings for ksmd kthread to merge memory pages with the same content.
