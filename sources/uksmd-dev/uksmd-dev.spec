@@ -33,25 +33,23 @@ Requires:       procps-ng
 Requires:       procps-ng-devel
 Conflicts:      uksmd
 %description
-The daemon goes through the list of userspace tasks (once per 5 seconds) and hints them to apply MADV_MERGEABLE to
-anonymous mappings for ksmd kthread to merge memory pages with the same content.
-Only long-living tasks are hinted (those that were launched more than 10 seconds ago).
+The daemon goes through the list of userspace tasks regularly and tells them to set MMF_VM_MERGE_ANY flag for struct mm_struct for ksmd kthread to merge memory pages with the same content automatically. Only long-living tasks are processed. The mechanism is wrapped around the per-process KSM API that has been introduced in with the upstream commit d7597f59d1.
 
-This requires pmadv_ksm() syscall, which is available in linux-cachyos-bore/linux-cachyos-bore-lto kernels.
+This requires process_ksm_{enable,disable,status}() syscalls, that are available in linux-cachyos-bore/linux-cachyos-bore-lto kernels.
 
 %prep
-%setup -q -n %{name}-%{version}-rc1
+%setup -q -n uksmd-%{version}-rc1
 %autosetup -c
 
 %build
-cd %{name}-%{version}-rc1
+cd uksmd-%{version}-rc1
 # Decreasing the meson version to satisfy dependencies
 sed -i 's/0.64.0/0.63.3/g' meson.build
 %meson
 %meson_build
 
 %install
-cd %{name}-%{version}-rc1
+cd uksmd-%{version}-rc1
 %meson_install
 
 %files
