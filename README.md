@@ -13,11 +13,10 @@
 - Choose between `LLVM/LTO` or `GCC`.
 - AMD PSTATE Guided Driver enabled by default and with enhancements patches/fixes.
 - RCU fixes and improvements.
-- Latest BTRFS improvements & fixes.
+- Latest BTRFS and EXT4 improvements & fixes.
 - Latest & improved ZSTD 1.5.5 patch-set.
 - UserKSM daemon from pf.
 - Improved BFQ Scheduler.
-- zram patches from upstream.
 - Clearlinux Patchset.
 - Back-ported patches from `linux-next`.
 - BBRv2 tcp_congestion_control.
