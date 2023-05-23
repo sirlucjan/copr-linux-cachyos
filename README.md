@@ -98,6 +98,8 @@ Check description [here](https://github.com/CachyOS/uksmd).
 
 ### Installation instructions:
 
+#### Fedora Workstation
+
 ```
 sudo dnf copr enable bieszczaders/kernel-cachyos-addons
 ```
@@ -112,6 +114,46 @@ sudo dnf install libcap-ng libcap-ng-devel procps-ng procps-ng-devel
 
 ```
 sudo dnf install uksmd
+```
+
+### Enable UKSMD:
+
+```
+sudo systemd enable uksmd && sudo systemd start uksmd
+```
+
+### Checking the correct operation of the uksmd:
+
+```
+systemctl status uksmd
+```
+
+and
+
+```
+uksmdstats
+```
+
+#### Fedora Silverblue
+
+```
+cd /etc/yum.repos.d/
+
+sudo wget https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos-addons/repo/fedora-$(rpm -E %fedora)/bieszczaders-kernel-cachyos-addons-fedora-$(rpm -E %fedora).repo
+```
+
+### Install required packages:
+
+```
+sudo rpm-ostree install libcap-ng-devel procps-ng-devel
+```
+
+### Install UKSMD:
+
+```
+sudo rpm-ostree install uksmd
+
+sudo systemctl reboot
 ```
 
 ### Enable UKSMD:
