@@ -12,10 +12,10 @@
 Name:           uksmd-dev
 Summary:        Userspace KSM helper daemon (CachyOS branding)
 Version:        1.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv3
 URL:            https://github.com/CachyOS/uksmd
-Source0:        %url/archive/v%{version}-rc1.tar.gz
+Source0:        %url/archive/v%{version}-rc2.tar.gz
 
 BuildRequires:  meson
 BuildRequires:  gcc
@@ -40,18 +40,18 @@ The mechanism is wrapped around the per-process KSM API that has been introduced
 This requires process_ksm_{enable,disable,status}() syscalls, that are available in linux-cachyos-bore/linux-cachyos-bore-lto kernels.
 
 %prep
-%setup -q -n uksmd-%{version}-rc1
+%setup -q -n uksmd-%{version}-rc2
 %autosetup -c
 
 %build
-cd uksmd-%{version}-rc1
+cd uksmd-%{version}-rc2
 # Decreasing the meson version to satisfy dependencies
 sed -i 's/0.64.0/0.63.3/g' meson.build
 %meson
 %meson_build
 
 %install
-cd uksmd-%{version}-rc1
+cd uksmd-%{version}-rc2
 %meson_install
 
 %files
