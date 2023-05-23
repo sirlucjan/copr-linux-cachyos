@@ -39,6 +39,8 @@ If it does not detect x86_64_v3 support do not install the kernel. Otherwise you
 
 ### Installation instructions:
 
+#### Fedora Workstation
+
 ```
 sudo dnf copr enable bieszczaders/kernel-cachyos
 ```
@@ -59,6 +61,36 @@ If you build external modules (e.g. for Nvidia graphics card drivers) and use th
 ```
 dnf install clang clang-devel llvm lld
 ```
+
+#### Fedora Silverblue
+
+```
+cd /etc/yum.repos.d/
+
+sudo wget https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos/repo/fedora-$(rpm -E %fedora)/bieszczaders-kernel-cachyos-fedora-$(rpm -E %fedora).repo
+```
+
+and next
+
+```
+sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --install kernel-cachyos-bore
+
+sudo systemctl reboot
+```
+
+OR
+```
+sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --install kernel-cachyos-bore-lto
+
+sudo systemctl reboot
+```
+
+### Install drivers for lto kernel:
+If you build external modules (e.g. for Nvidia graphics card drivers) and use the -lto kernel, you need to install the following dependencies:
+```
+sudo rpm-ostree install clang clang-devel llvm lld
+```
+
 
 # UKSMD
 
