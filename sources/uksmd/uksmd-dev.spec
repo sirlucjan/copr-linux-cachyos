@@ -37,7 +37,7 @@ The daemon goes through the list of userspace tasks regularly and tells them to 
 struct mm_struct for ksmd kthread to merge memory pages with the same content automatically. Only long-living tasks are processed.
 The mechanism is wrapped around the per-process KSM API that has been introduced in with the upstream commit d7597f59d1.
 
-This requires process_ksm_{enable,disable,status}() syscalls, that are available in linux-cachyos-bore/linux-cachyos-bore-lto kernels.
+This requires process_ksm_{enable,disable,status}() syscalls, that are available in kernel-cachyos-bore/kernel-cachyos-bore-lto.
 
 %prep
 %setup -q -n uksmd-%{version}-rc2
