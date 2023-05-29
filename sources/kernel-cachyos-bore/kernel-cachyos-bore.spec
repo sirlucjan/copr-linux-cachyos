@@ -175,7 +175,7 @@ scripts/config --set-str DEFAULT_TCP_CONG bbr2
 scripts/config -m NET_SCH_FQ_CODEL
 scripts/config -d DEFAULT_FQ_CODEL
 scripts/config -e DEFAULT_FQ
-scripts/config --set-str DEFAULT_TCP_CONG bbr2
+scripts/config --set-str DEFAULT_NET_SCH fq
 
 # Disable DEBUG
 scripts/config -d DEBUG_INFO
