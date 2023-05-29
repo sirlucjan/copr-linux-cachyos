@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-EEVDF-BORE Patches
 %define _stablekver 4
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 2
 %define flaver cb%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -171,6 +171,10 @@ scripts/config -m TCP_CONG_CUBIC
 scripts/config -d DEFAULT_CUBIC
 scripts/config -e TCP_CONG_BBR2
 scripts/config -e DEFAULT_BBR2
+scripts/config --set-str DEFAULT_TCP_CONG bbr2
+scripts/config -m CONFIG_NET_SCH_FQ_CODEL
+scripts/config -d CONFIG_DEFAULT_FQ_CODEL
+scripts/config -e CONFIG_DEFAULT_FQ
 scripts/config --set-str DEFAULT_TCP_CONG bbr2
 
 # Disable DEBUG
