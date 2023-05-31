@@ -45,8 +45,6 @@ This requires pmadv_ksm() syscall, which is available in kernel-cachyos-bore/ker
 
 %build
 cd %{name}-%{version}
-# Decreasing the meson version to satisfy dependencies
-sed -i 's/0.64.0/0.63.3/g' meson.build
 %meson
 %meson_build
 
