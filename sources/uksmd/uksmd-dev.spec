@@ -45,8 +45,6 @@ This requires process_ksm_{enable,disable,status}() syscalls, that are available
 
 %build
 cd uksmd-%{version}-rc2
-# Decreasing the meson version to satisfy dependencies
-sed -i 's/0.64.0/0.63.3/g' meson.build
 %meson
 %meson_build
 
