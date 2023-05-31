@@ -172,7 +172,8 @@ scripts/config -d DEFAULT_CUBIC
 scripts/config -e TCP_CONG_BBR2
 scripts/config -e DEFAULT_BBR2
 scripts/config --set-str DEFAULT_TCP_CONG bbr2
-# bbr2 doesn't work properly with FQ_CODEL
+
+# Switch into FQ - bbr2 doesn't work properly with FQ_CODEL
 scripts/config -m NET_SCH_FQ_CODEL
 scripts/config -e NET_SCH_FQ
 scripts/config -d DEFAULT_FQ_CODEL
