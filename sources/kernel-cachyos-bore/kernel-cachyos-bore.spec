@@ -152,11 +152,6 @@ scripts/config -d HZ_300
 scripts/config -e HZ_500
 scripts/config --set-val HZ 500
 
-# Enable MGLRU
-scripts/config -e LRU_GEN
-scripts/config -e LRU_GEN_ENABLED
-scripts/config -d LRU_GEN_STATS
-
 # Enable PER_VMA_LOCK
 scripts/config -e PER_VMA_LOCK
 scripts/config -d PER_VMA_LOCK_STATS
