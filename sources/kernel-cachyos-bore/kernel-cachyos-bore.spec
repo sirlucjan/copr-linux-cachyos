@@ -30,7 +30,7 @@ Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-EEVDF-BORE Patches
 
 %define _basekver 6.3
-%define _stablekver 6
+%define _stablekver 7
 Version: %{_basekver}.%{_stablekver}
 
 %define customver 1
