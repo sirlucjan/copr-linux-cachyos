@@ -28,6 +28,7 @@
 - [per VMA lock](https://lwn.net/Articles/924572/).
 - Lenovo Legion [Patchset](https://github.com/johnfanv2/LenovoLegionLinux)
 - Surface [Patches](https://github.com/linux-surface/linux-surface)
+- Latest kvm-lru patches from upstream
 
 ### Checking for the cpu support:
 Check support by the following the command
