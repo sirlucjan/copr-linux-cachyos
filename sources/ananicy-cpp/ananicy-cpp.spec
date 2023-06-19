@@ -4,6 +4,8 @@
 # bieszczaders <zbyszek@linux.pl>
 # https://copr.fedorainfracloud.org/coprs/bieszczaders/
 
+%define _disable_source_fetch 0
+
 Name:           ananicy-cpp
 Version:        1.1.0
 Release:        %autorelease
