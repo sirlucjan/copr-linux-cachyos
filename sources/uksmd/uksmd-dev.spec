@@ -31,7 +31,7 @@ Requires:       libcap-ng
 Requires:       libcap-ng-devel
 Requires:       procps-ng
 Requires:       procps-ng-devel
-Conflicts:      uksmd-dev
+Conflicts:      uksmd
 %description
 The daemon goes through the list of userspace tasks (once per 5 seconds) and hints them to apply MADV_MERGEABLE to
 anonymous mappings for ksmd kthread to merge memory pages with the same content.
@@ -40,16 +40,16 @@ Only long-living tasks are hinted (those that were launched more than 10 seconds
 This requires pmadv_ksm() syscall, which is available in kernel-cachyos-bore/kernel-cachyos-bore-lto.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n uksmd-%{version}
 %autosetup -c
 
 %build
-cd %{name}-%{version}
+cd uksmd-%{version}
 %meson
 %meson_build
 
 %install
-cd %{name}-%{version}
+cd uksmd-%{version}
 %meson_install
 
 %files
