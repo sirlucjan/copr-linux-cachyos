@@ -31,7 +31,7 @@ Requires:       libcap-ng
 Requires:       libcap-ng-devel
 Requires:       procps-ng
 Requires:       procps-ng-devel
-Conflicts:      uksmd-dev
+Conflicts:      uksmd-rawhide
 %description
 The daemon goes through the list of userspace tasks regularly and tells them to set MMF_VM_MERGE_ANY flag for
 struct mm_struct for ksmd kthread to merge memory pages with the same content automatically. Only long-living tasks are processed.
