@@ -44,11 +44,10 @@ This requires process_ksm_{enable,disable,status}() syscalls, that are available
 %setup -q -n uksmd-%{version}
 %autosetup -c
 
-# Add uksmdstats fixes
-patch -p1 -i %{PATCH0}
-
 %build
 cd uksmd-%{version}
+# Add uksmdstats fixes
+patch -p1 -i %{PATCH0}
 %meson
 %meson_build
 
