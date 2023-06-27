@@ -12,11 +12,10 @@
 Name:           uksmd-dev
 Summary:        Userspace KSM helper daemon (CachyOS branding)
 Version:        1.2.0
-Release:        2%{?dist}
+Release:        1%{?dist}
 License:        GPLv3
 URL:            https://github.com/CachyOS/uksmd
 Source0:        %url/archive/v%{version}.tar.gz
-Patch0:         https://github.com/CachyOS/uksmd/compare/v1.2.2...master.patch
 
 BuildRequires:  meson
 BuildRequires:  gcc
@@ -43,9 +42,6 @@ This requires process_ksm_{enable,disable,status}() syscalls, that are available
 %prep
 %setup -q -n uksmd-%{version}
 %autosetup -c
-
-# Add uksmdstats fixes
-patch -p1 -i %{PATCH0}
 
 %build
 cd uksmd-%{version}
