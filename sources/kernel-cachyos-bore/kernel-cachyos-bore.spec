@@ -152,10 +152,6 @@ scripts/config -d HZ_300
 scripts/config -e HZ_500
 scripts/config --set-val HZ 500
 
-# Enable PER_VMA_LOCK
-scripts/config -e PER_VMA_LOCK
-scripts/config -d PER_VMA_LOCK_STATS
-
 # Enabling better ZSTD modules and kernel compression ratio
 scripts/config --set-val MODULE_COMPRESS_ZSTD_LEVEL 19
 scripts/config -d MODULE_COMPRESS_ZSTD_ULTRA
