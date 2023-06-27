@@ -9,7 +9,7 @@
 
 %define _disable_source_fetch 0
 
-Name:           uksmd-trunk
+Name:           uksmd-rawhide
 Summary:        Userspace KSM helper daemon (CachyOS branding)
 Version:        1.2.2
 Release:        1%{?dist}

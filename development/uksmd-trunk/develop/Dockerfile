@@ -5,4 +5,4 @@ RUN dnf -y install git rpmdevtools && \
     cd copr-linux-cachyos/sources/uksmd && \
     git checkout develop && \
     rpmdev-setuptree && \
-    rpmbuild -bs --target=x86_64 uksmd-trunk.spec
+    rpmbuild -bs --target=x86_64 uksmd-rawhide.spec
