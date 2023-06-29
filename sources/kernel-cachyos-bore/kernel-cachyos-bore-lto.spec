@@ -152,11 +152,6 @@ scripts/config -d HZ_300
 scripts/config -e HZ_500
 scripts/config --set-val HZ 500
 
-# Enabling better ZSTD modules and kernel compression ratio
-scripts/config --set-val MODULE_COMPRESS_ZSTD_LEVEL 19
-scripts/config -d MODULE_COMPRESS_ZSTD_ULTRA
-scripts/config --set-val ZSTD_COMP_VAL 22
-
 # Enable bbr2
 scripts/config -m TCP_CONG_CUBIC
 scripts/config -d DEFAULT_CUBIC
@@ -258,7 +253,7 @@ mkdir -p %{buildroot}/boot
 cp -v $ImageName %{buildroot}/boot/vmlinuz-%{kverstr}
 chmod 755 %{buildroot}/boot/vmlinuz-%{kverstr}
 
-make %{?_smp_mflags} INSTALL_MOD_PATH=%{buildroot} modules_install mod-fw=
+ZSTD_CLEVEL=19 make %{?_smp_mflags} INSTALL_MOD_PATH=%{buildroot} modules_install mod-fw=
 make %{?_smp_mflags} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
 
 # prepare -devel files
