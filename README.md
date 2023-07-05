@@ -12,12 +12,10 @@
 ### Features:
 - Choose between `LLVM/LTO` or `GCC`.
 - AMD PSTATE Guided Driver enabled by default and with enhancements patches/fixes.
-- RCU fixes and improvements.
-- Latest BTRFS and EXT4 improvements & fixes.
+- Latest BTRFS and XFS improvements & fixes.
 - Latest & improved ZSTD 1.5.5 patch-set.
 - UserKSM daemon from pf.
 - Improved BFQ Scheduler.
-- Clearlinux Patchset.
 - Back-ported patches from `linux-next`.
 - BBRv2 tcp_congestion_control.
 - Scheduler patches from linux-next/tip.
@@ -25,7 +23,6 @@
 - OpenRGB and ACS Override support.
 - HDR Patches for AMD GPU's and gamescope.
 - Default support for Steam Deck.
-- [per VMA lock](https://lwn.net/Articles/924572/).
 - Lenovo Legion [Patchset](https://github.com/johnfanv2/LenovoLegionLinux)
 - Surface [Patches](https://github.com/linux-surface/linux-surface)
 - Latest kvm-lru patches from upstream
