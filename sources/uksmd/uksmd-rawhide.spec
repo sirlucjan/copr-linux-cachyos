@@ -12,12 +12,13 @@
 Name:           uksmd-rawhide
 Summary:        Userspace KSM helper daemon (CachyOS branding)
 Version:        1.2.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv3
 URL:            https://github.com/CachyOS/uksmd
 Source0:        %url/archive/v%{version}.tar.gz
 
 BuildRequires:  meson
+BuildRequires:  gettext
 BuildRequires:  gcc
 BuildRequires:  git
 BuildRequires:  cmake
@@ -57,6 +58,9 @@ cd uksmd-%{version}
 /usr/bin/uksmdstats
 /usr/lib/systemd/system/uksmd.service
 /usr/share/licenses/uksmd/LICENSE
+/usr/share/locale/de/LC_MESSAGES/uksmdstats.mo
+/usr/share/locale/pl/LC_MESSAGES/uksmdstats.mo
+/usr/share/locale/ru/LC_MESSAGES/uksmdstats.mo
 
 %changelog
 * Thu Feb 09 2023 lucjan - 1.1.0-1
