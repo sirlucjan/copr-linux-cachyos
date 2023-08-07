@@ -8,7 +8,7 @@
 
 Name:           bore-sysctl
 Summary:        Userspace KSM helper daemon (CachyOS branding)
-Version:        1.0.2
+Version:        1.0.3
 Release:        1%{?dist}
 License:        GPLv3
 URL:            https://github.com/sirlucjan/CachyOS-Settings
