@@ -17,7 +17,7 @@
 - UserKSM daemon from pf.
 - Improved BFQ Scheduler.
 - Back-ported patches from `linux-next`.
-- BBRv2 tcp_congestion_control.
+- BBRv3 tcp_congestion_control.
 - Scheduler patches from linux-next/tip.
 - General improved sysctl settings and upstream scheduler fixes.
 - OpenRGB and ACS Override support.
