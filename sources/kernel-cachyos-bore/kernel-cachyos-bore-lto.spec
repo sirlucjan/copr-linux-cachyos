@@ -30,10 +30,10 @@ Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-EEVDF-BORE Patches
 
 %define _basekver 6.4
-%define _stablekver 9
+%define _stablekver 10
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 2
+%define customver 1
 %define flaver cbl%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -47,8 +47,8 @@ Group: System Environment/Kernel
 Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
 Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
-#Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
-Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
+Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
+#Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
 Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF.patch
 Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-eevdf.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
