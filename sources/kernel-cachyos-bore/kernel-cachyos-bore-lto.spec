@@ -23,7 +23,7 @@
 %endif
 
 # whether to use LLVM-built kernel package dependencies
-%define llvm_kbuild 0
+%define llvm_kbuild 1
 
 %define flavor cachyos-bore-lto
 Name: kernel%{?flavor:-%{flavor}}
@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-EEVDF-BORE Patches
 %define _stablekver 11
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 2
+%define customver 3
 %define flaver cbl%{customver}
 
 Release:%{flaver}.0%{?dist}
