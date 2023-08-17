@@ -23,7 +23,7 @@
 %endif
 
 # whether to use LLVM-built kernel package dependencies
-%define llvm_kbuild 1
+%define llvm_kbuild 0
 
 %define flavor cachyos-bore-lto
 Name: kernel%{?flavor:-%{flavor}}
@@ -54,7 +54,7 @@ Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basek
 #Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-eevdf.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
 %define debug_package %{nil}
-BuildRequires: python3-devel make perl-generators perl-interpreter openssl-devel bison flex findutils git-core perl-devel openssl elfutils-devel gawk binutils m4 tar hostname bzip2 bash gzip xz bc diffutils redhat-rpm-config net-tools elfutils patch rpm-build dwarves kmod libkcapi-hmaccalc perl-Carp rsync grubby wget
+BuildRequires: python3-devel python3 make perl-generators perl-interpreter openssl-devel bison flex findutils git-core perl-devel openssl elfutils-devel gawk binutils m4 tar hostname bzip2 bash gzip xz bc diffutils redhat-rpm-config net-tools elfutils patch rpm-build dwarves kmod libkcapi-hmaccalc perl-Carp rsync grubby wget clang clang-devel llvm lld
 %if %{llvm_kbuild}
 BuildRequires: llvm%{_isa} lld%{_isa} clang%{_isa}
 %else
