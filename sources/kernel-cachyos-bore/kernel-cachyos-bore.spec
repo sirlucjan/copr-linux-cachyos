@@ -1,4 +1,4 @@
-### A port of linux-cachyos-bore for the Fedora operating system.
+### A port of linux-cachyos-bore (https://github.com/CachyOS/linux-cachyos/tree/master/linux-cachyos-bore) for the Fedora operating system.
 # https://github.com/CachyOS/linux-cachyos
 ### The authors of linux-cachyos patchset:
 # Peter Jung ptr1337 <admin@ptr1337.dev>
