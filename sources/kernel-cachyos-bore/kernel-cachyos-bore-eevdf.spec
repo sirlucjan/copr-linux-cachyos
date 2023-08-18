@@ -27,7 +27,7 @@
 
 %define flavor cachyos-bore-eevdf
 Name: kernel%{?flavor:-%{flavor}}
-Summary: The Linux Kernel with Cachyos-EEVDF-BORE Patches
+Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 
 %define _basekver 6.4
 %define _stablekver 11
@@ -131,7 +131,7 @@ This meta package is used to install matching core and devel packages for a give
 # Extract cachyos-base patch and apply to tree
 patch -p1 -i %{PATCH0}
 
-# Extract eevdf-bore-cachy patch and apply to tree
+# Extract bore-eevdf patch and apply to tree
 patch -p1 -i %{PATCH1}
 patch -p1 -i %{PATCH2}
 
