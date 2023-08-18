@@ -5,12 +5,14 @@
 
 # KERNEL
 
-### linux-cachyos-bore uses as default the EEVDF-BORE scheduler
-- **(BORE) - Burst-Oriented Response Enhancer) CPU Scheduler** by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler)
+### linux-cachyos-bore-eevdf uses as default the EEVDF-BORE scheduler
+- **(BORE) - Burst-Oriented Response Enhancer) CPU Scheduler** by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler/tree/main/eevdf-bore-dev)
 - **(EEVDF) - Earliest Eligiable Virtual Deadline First** [EEVDF](https://lwn.net/Articles/927530/) is a replacement for the CFS Scheduler from Peter Zijlstra
 
+### linux-cachyos-bore uses as default the BORE scheduler
+- **(BORE) - Burst-Oriented Response Enhancer) CPU Scheduler** by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler/tree/main/bore-stable)
+
 ### Features:
-- Choose between `LLVM/LTO` or `GCC`.
 - AMD PSTATE Guided Driver enabled by default and with enhancements patches/fixes.
 - Latest BTRFS and XFS improvements & fixes.
 - Latest & improved ZSTD 1.5.5 patch-set.
@@ -51,13 +53,7 @@ sudo dnf install kernel-cachyos-bore
 
 OR
 ```
-sudo dnf install kernel-cachyos-bore-lto
-```
-
-### Install drivers for lto kernel:
-If you build external modules (e.g. for Nvidia graphics card drivers) and use the -lto kernel, you need to install the following dependencies:
-```
-dnf install clang clang-devel llvm lld
+sudo dnf install kernel-cachyos-bore-eevdf
 ```
 
 #### Fedora Silverblue
@@ -78,17 +74,10 @@ sudo systemctl reboot
 
 OR
 ```
-sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --install kernel-cachyos-bore-lto
+sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --install kernel-cachyos-bore-eevdf
 
 sudo systemctl reboot
 ```
-
-### Install drivers for lto kernel:
-If you build external modules (e.g. for Nvidia graphics card drivers) and use the -lto kernel, you need to install the following dependencies:
-```
-sudo rpm-ostree install clang clang-devel llvm lld
-```
-
 
 # UKSMD
 
