@@ -137,7 +137,7 @@ patch -p1 -i %{PATCH0}
 patch -p1 -i %{PATCH1}
 patch -p1 -i %{PATCH2}
 
-# Patch the config file
+# Fetch the config and move it to the proper directory
 wget https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-bore/config
 cp config .config
 
