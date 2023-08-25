@@ -23,7 +23,8 @@
 %endif
 
 # whether to use LLVM-built kernel package dependencies
-%define llvm_kbuild 0
+# The flag is not working as it should - if you want the LTO kernels to re-visit the repository, send a proper pull request.
+#%define llvm_kbuild 0
 
 %define flavor cachyos-bore
 Name: kernel%{?flavor:-%{flavor}}
