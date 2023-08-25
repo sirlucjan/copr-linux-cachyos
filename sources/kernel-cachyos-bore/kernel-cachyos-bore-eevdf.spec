@@ -161,7 +161,6 @@ scripts/config -d DEFAULT_CUBIC
 scripts/config -e TCP_CONG_BBR
 scripts/config -e DEFAULT_BBR
 scripts/config --set-str DEFAULT_TCP_CONG bbr
-
 # Switch into FQ - bbr3 doesn't work properly with FQ_CODEL
 scripts/config -m NET_SCH_FQ_CODEL
 scripts/config -e NET_SCH_FQ
