@@ -15,7 +15,7 @@
 - **(BORE) - Burst-Oriented Response Enhancer) CPU Scheduler** by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler/tree/main/bore-stable)
 
 ### Features:
-- AMD PSTATE Guided Driver enabled by default and with enhancements patches/fixes.
+- AMD PSTATE Preferred Core and enabled as default
 - Latest BTRFS and XFS improvements & fixes.
 - Latest & improved ZSTD 1.5.5 patch-set.
 - UserKSM daemon from pf.
