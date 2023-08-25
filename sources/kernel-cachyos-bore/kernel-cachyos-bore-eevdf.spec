@@ -129,10 +129,10 @@ This meta package is used to install matching core and devel packages for a give
 %prep
 %setup -q -n linux-%{_basekver}.%{_stablekver}
 
-# Extract cachyos-base patch and apply to tree
+# Apply CachyOS patch
 patch -p1 -i %{PATCH0}
 
-# Extract bore-eevdf patch and apply to tree
+# Apply EEVDF and BORE patches
 patch -p1 -i %{PATCH1}
 patch -p1 -i %{PATCH2}
 
