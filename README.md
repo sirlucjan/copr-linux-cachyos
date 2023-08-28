@@ -8,11 +8,11 @@
 # KERNEL
 
 ### linux-cachyos-bore-eevdf uses as default the BORE-EEVDF scheduler
-- **(BORE) - Burst-Oriented Response Enhancer) CPU Scheduler** by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler/tree/main/eevdf-bore-dev)
+- **(BORE) - Burst-Oriented Response Enhancer) CPU Scheduler** by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler/tree/main/patches/linux-6.4-eevdf-bore)
 - **(EEVDF) - Earliest Eligiable Virtual Deadline First** [EEVDF](https://lwn.net/Articles/927530/) is a replacement for the CFS Scheduler from Peter Zijlstra
 
 ### linux-cachyos-bore uses as default the BORE scheduler
-- **(BORE) - Burst-Oriented Response Enhancer) CPU Scheduler** by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler/tree/main/bore-stable)
+- **(BORE) - Burst-Oriented Response Enhancer) CPU Scheduler** by [firelzrd (BORE)](https://github.com/firelzrd/bore-scheduler/tree/main/patches/linux-6.4-bore)
 
 ### Features:
 - AMD PSTATE Preferred Core and enabled as default
