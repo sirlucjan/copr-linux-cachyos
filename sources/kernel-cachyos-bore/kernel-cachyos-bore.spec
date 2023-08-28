@@ -30,8 +30,8 @@
 Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-BORE Patches
 
-%define _basekver 6.4
-%define _stablekver 12
+%define _basekver 6.5
+%define _stablekver 0
 Version: %{_basekver}.%{_stablekver}
 
 %define customver 1
@@ -47,7 +47,8 @@ License: GPLv2 and Redistributable, no modifications permitted
 Group: System Environment/Kernel
 Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
-Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
+#Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
+Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
 #Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
 Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/0001-bore-tuning-sysctl.patch
@@ -129,7 +130,8 @@ Provides: kernel-devel-matched = %{rpmver}, kernel-devel-matched%{_isa} = %{rpmv
 This meta package is used to install matching core and devel packages for a given %{?flavor:%{flavor}} kernel.
 
 %prep
-%setup -q -n linux-%{_basekver}.%{_stablekver}
+#%setup -q -n linux-%{_basekver}.%{_stablekver}
+%setup -q -n linux-%{_basekver}
 
 # Apply CachyOS patch
 patch -p1 -i %{PATCH0}
