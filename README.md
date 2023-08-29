@@ -28,8 +28,6 @@
 - HDR Patches for AMD GPU's and gamescope.
 - Default support for Steam Deck.
 - Lenovo Legion [Patchset](https://github.com/johnfanv2/LenovoLegionLinux)
-- Surface [Patches](https://github.com/linux-surface/linux-surface)
-- Latest kvm-lru patches from upstream
 
 ### Checking for the cpu support:
 Check support by the following the command
