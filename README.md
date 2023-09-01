@@ -1,6 +1,6 @@
 <div align="center">
  
-  <h1 align="center">linux-cachyos-bore for Fedora</h1>
+  <h1 align="center">linux-cachyos-bore / linux-cachyos-bore-eevdf  for Fedora</h1>
 </div>
 
 # Announcement (20.08.2023): Due to the large amount of work on the LTO kernel, its further development will be discontinued. Instead, we provide a kernel with a BORE + CFS and BORE + EEVDF scheduler. Please make appropriate changes to the system in order to receive updates. Sorry for the difficulties.
