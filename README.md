@@ -18,7 +18,7 @@
 - AMD PSTATE Preferred Core and enabled as default
 - Latest BTRFS and XFS improvements & fixes.
 - Latest & improved ZSTD 1.5.5 patch-set.
-- UserKSM daemon from pf.
+- UserKSM daemon from pf (wit uksmdstats from CachyOS).
 - Improved BFQ Scheduler.
 - Back-ported patches from `linux-next`.
 - BBRv3 tcp_congestion_control.
