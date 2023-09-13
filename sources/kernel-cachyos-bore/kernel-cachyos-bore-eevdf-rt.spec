@@ -150,9 +150,6 @@ scripts/config -u LOCALVERSION
 # Enable CachyOS tweaks
 scripts/config -e CACHY
 
-# PREEMPT_RT
-scripts/config -e PREEMPT_RT
-
 # Enable BORE Scheduler
 scripts/config -e SCHED_BORE
 
@@ -216,14 +213,17 @@ scripts/config -e NO_HZ
 scripts/config -e NO_HZ_COMMON
 scripts/config -e CONTEXT_TRACKING
 
-# Enable full preempt
-scripts/config -e PREEMPT_BUILD
-scripts/config -d PREEMPT_NONE
-scripts/config -d PREEMPT_VOLUNTARY
-scripts/config -e PREEMPT
+# Enable RT config
 scripts/config -e PREEMPT_COUNT
 scripts/config -e PREEMPTION
-scripts/config -e PREEMPT_DYNAMIC
+scripts/config -d PREEMPT_VOLUNTARY
+scripts/config -d PREEMPT
+scripts/config -d PREEMPT_NONE
+scripts/config -e PREEMPT_RT
+scripts/config -e PREEMPT_LAZY
+scripts/config -d PREEMPT_DYNAMIC
+scripts/config -e HAVE_PREEMPT_LAZY
+scripts/config -d PREEMPT_BUILD
 
 # Unset hostname
 scripts/config -u DEFAULT_HOSTNAME
