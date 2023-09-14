@@ -88,6 +88,8 @@ sudo systemctl reboot
 OR for realtime
 ```
 sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --install kernel-cachyos-bore-eevdf-rt
+
+sudo systemctl reboot
 ```
 
 
