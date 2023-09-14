@@ -26,16 +26,16 @@
 # The flag is not working as it should - if you want the LTO kernels to re-visit the repository, send a proper pull request.
 #%define llvm_kbuild 0
 
-%define flavor cachyos-bore-lts
+%define flavor cachyos-lts
 Name: kernel%{?flavor:-%{flavor}}
-Summary: The Linux Kernel with Cachyos-BORE Patches
+Summary: The Linux Kernel with Cachyos Patches
 
 %define _basekver 6.1
-%define _stablekver 49
+%define _stablekver 53
 Version: %{_basekver}.%{_stablekver}
 
 %define customver 1
-%define flaver cblts%{customver}
+%define flaver clts%{customver}
 
 Release:%{flaver}.0%{?dist}
 
