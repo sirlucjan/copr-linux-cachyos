@@ -34,7 +34,7 @@ Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 %define _stablekver 3
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 3
+%define customver 4
 %define flaver cbert%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -54,6 +54,7 @@ Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basek
 #Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF.patch
 Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/0001-rt.patch
 Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF-cachy.patch
+Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-eevdf.patch
 #Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-eevdf.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
 %define debug_package %{nil}
@@ -138,6 +139,7 @@ patch -p1 -i %{PATCH0}
 # Apply EEVDF and BORE patches
 patch -p1 -i %{PATCH1}
 patch -p1 -i %{PATCH2}
+patch -p1 -i %{PATCH3}
 
 # Fetch the config and move it to the proper directory
 wget https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-bore/config
