@@ -34,7 +34,7 @@ Summary: The Linux Kernel with Cachyos-BORE Patches
 %define _stablekver 2
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 2
 %define flaver cb%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -494,9 +494,12 @@ if [ `uname -i` == "x86_64" -o `uname -i` == "i386" ] &&
    [ -f /etc/sysconfig/kernel ]; then
   /bin/sed -r -i -e 's/^DEFAULTKERNEL=kernel-smp$/DEFAULTKERNEL=kernel/' /etc/sysconfig/kernel || exit $?
 fi
+/bin/kernel-install add %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
 
 %posttrans core
-/bin/kernel-install add %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
+if [ ! -z $(rpm -qa | grep grubby) ]; then
+  grubby --set-default="/boot/vmlinuz-%{kverstr}"
+fi
 
 %preun core
 /bin/kernel-install remove %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
