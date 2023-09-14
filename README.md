@@ -51,10 +51,16 @@ and next
 sudo dnf install kernel-cachyos-bore
 ```
 
-OR
+OR for bore-eevdf
 ```
 sudo dnf install kernel-cachyos-bore-eevdf
 ```
+
+OR for realtime
+```
+sudo dnf install kernel-cachyos-bore-eevdf-rt
+```
+
 
 #### Fedora Silverblue
 
@@ -72,12 +78,18 @@ sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules
 sudo systemctl reboot
 ```
 
-OR
+OR for bore-eevdf
 ```
 sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --install kernel-cachyos-bore-eevdf
 
 sudo systemctl reboot
 ```
+
+OR for realtime
+```
+sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --install kernel-cachyos-bore-eevdf-rt
+```
+
 
 # UKSMD
 
