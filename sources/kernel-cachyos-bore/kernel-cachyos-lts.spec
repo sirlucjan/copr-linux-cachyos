@@ -201,7 +201,7 @@ scripts/config -d DEBUG_PREEMPT
 # and make sure if your processor supports it:
 # x86-64-v3 (supported, searched)
 scripts/config -d GENERIC_CPU
-scripts/config -e GENERIC_CPU3
+scripts/config -e GENERIC_CPU2
 
 # Set performance governor
 scripts/config -d CPU_FREQ_DEFAULT_GOV_SCHEDUTIL

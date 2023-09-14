@@ -61,6 +61,12 @@ OR for realtime
 sudo dnf install kernel-cachyos-bore-eevdf-rt
 ```
 
+OR for lts
+```
+sudo dnf install kernel-cachyos-lts
+```
+
+LTS kernel works with x86_64v2 cpu's and legacy nvidia drivers
 
 #### Fedora Silverblue
 
@@ -91,6 +97,15 @@ sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules
 
 sudo systemctl reboot
 ```
+
+OR for lts
+```
+sudo rpm-ostree override remove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra --install kernel-cachyos-lts
+
+sudo systemctl reboot
+```
+
+LTS kernel works with x86_64v2 cpu's and legacy nvidia drivers
 
 
 # UKSMD
