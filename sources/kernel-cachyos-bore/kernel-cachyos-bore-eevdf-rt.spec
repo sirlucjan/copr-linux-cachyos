@@ -203,15 +203,12 @@ scripts/config -e CPU_FREQ_DEFAULT_GOV_PERFORMANCE
 scripts/config -d CC_OPTIMIZE_FOR_PERFORMANCE
 scripts/config -e CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
-# Enable full ticks
+# Enable idle ticks
 scripts/config -d HZ_PERIODIC
-scripts/config -d NO_HZ_IDLE
-scripts/config -d CONTEXT_TRACKING_FORCE
-scripts/config -e NO_HZ_FULL_NODEF
-scripts/config -e NO_HZ_FULL
+scripts/config -d NO_HZ_FULL
+scripts/config -e NO_HZ_IDLE
 scripts/config -e NO_HZ
 scripts/config -e NO_HZ_COMMON
-scripts/config -e CONTEXT_TRACKING
 
 # Enable RT config
 scripts/config -e PREEMPT_COUNT
