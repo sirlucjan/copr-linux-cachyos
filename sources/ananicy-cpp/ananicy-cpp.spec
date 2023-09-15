@@ -4,15 +4,17 @@
 # bieszczaders <zbyszek@linux.pl>
 # https://copr.fedorainfracloud.org/coprs/bieszczaders/
 
+
 %define _disable_source_fetch 0
 
 Name:           ananicy-cpp
-Version:        1.1.1
-Release:        %autorelease
+Release:        2%{?dist}
+Version:	    1.1.1
 Summary:        Rewrite of ananicy in c++ for lower cpu and memory usage
 License:        GPLv3
 URL:            https://gitlab.com/ananicy-cpp/ananicy-cpp
 Source0:        %{url}/-/archive/v%{version}/ananicy-cpp-v%{version}.tar.gz
+
 ExcludeArch:    s390x i686 ppc64le
 
 BuildRequires:  gcc-c++
