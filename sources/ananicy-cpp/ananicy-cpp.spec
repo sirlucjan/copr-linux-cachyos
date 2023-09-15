@@ -7,7 +7,7 @@
 %define _disable_source_fetch 0
 
 Name:           ananicy-cpp
-Version:        1.1.0
+Version:        1.1.1
 Release:        %autorelease
 Summary:        Rewrite of ananicy in c++ for lower cpu and memory usage
 License:        GPLv3
@@ -39,7 +39,7 @@ Rewrite of ananicy in c++ for lower cpu and memory usage
 %cmake \
     -GNinja \
     -DENABLE_SYSTEMD=ON \
-    -DUSE_BPF_PROC_IMPL=ON \
+    -DUSE_BPF_PROC_IMPL=OFF \
     -DBPF_BUILD_LIBBPF=OFF \
     -DENABLE_ANANICY_TESTS=ON \
     -DBUILD_SHARED_LIBS=OFF \
