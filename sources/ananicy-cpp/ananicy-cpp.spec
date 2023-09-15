@@ -4,11 +4,12 @@
 # bieszczaders <zbyszek@linux.pl>
 # https://copr.fedorainfracloud.org/coprs/bieszczaders/
 
+
 %define _disable_source_fetch 0
 
 Name:           ananicy-cpp
-Version:        1.1.0
-Release:        %autorelease
+Release:        2%{?dist}
+Version:	    1.1.1
 Summary:        Rewrite of ananicy in c++ for lower cpu and memory usage
 License:        GPLv3
 URL:            https://gitlab.com/ananicy-cpp/ananicy-cpp
@@ -28,18 +29,27 @@ BuildRequires:  libbpf-devel
 BuildRequires:  elfutils-libelf
 BuildRequires:  llvm
 BuildRequires:  clang
+Requires:	ananicy-cpp-rules
 
 %description
 Rewrite of ananicy in c++ for lower cpu and memory usage
 
+%package rules
+Summary: list of rules used to assign specific nice values to specific processes.
+Requires: ananicy-cpp
+%description rules
+list of rules used to assign specific nice values to specific processes.
+
+
 %prep
 %autosetup -n ananicy-cpp-v%{version}
+git clone https://github.com/CachyOS/ananicy-rules.git %{_builddir}/ananicy-cpp-rules 
 
 %build
 %cmake \
     -GNinja \
     -DENABLE_SYSTEMD=ON \
-    -DUSE_BPF_PROC_IMPL=ON \
+    -DUSE_BPF_PROC_IMPL=OFF \
     -DBPF_BUILD_LIBBPF=OFF \
     -DENABLE_ANANICY_TESTS=ON \
     -DBUILD_SHARED_LIBS=OFF \
@@ -49,9 +59,21 @@ Rewrite of ananicy in c++ for lower cpu and memory usage
 %install
 %ninja_install -C %{_vpath_builddir}
 
+mkdir -p %{buildroot}/etc/ananicy.d/00-default
+cp %{_builddir}/ananicy-cpp-rules/00-default %{buildroot}/etc/ananicy.d/ -r
+
+
+
 %check
 ./%{_vpath_builddir}/src/tests/test-core
 ./%{_vpath_builddir}/src/tests/test-utility --test-case-exclude="Process Info"
+
+%posttrans
+systemctl enable --now ananicy-cpp
+
+%preun
+systemctl disable --now ananicy-cpp
+
 
 %files
 %license LICENSE
@@ -59,5 +81,11 @@ Rewrite of ananicy in c++ for lower cpu and memory usage
 %{_bindir}/ananicy-cpp
 %{_unitdir}/ananicy-cpp.service
 
+%files rules
+%defattr(-,root,root,-)
+/etc/ananicy.d/*
+
+
+
 %changelog
-%autochangelog
+%autochangelog/*
