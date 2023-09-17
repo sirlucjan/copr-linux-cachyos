@@ -34,7 +34,7 @@ Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 %define _stablekver 3
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 3
+%define customver 4
 %define flaver cbe%{customver}
 
 Release:%{flaver}.0%{?dist}
