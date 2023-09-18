@@ -34,7 +34,7 @@ Summary: The Linux Kernel with Cachyos Patches
 %define _stablekver 53
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 2
 %define flaver clts%{customver}
 
 Release:%{flaver}.0%{?dist}
