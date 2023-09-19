@@ -34,7 +34,7 @@ Summary: The Linux Kernel with Cachyos Patches
 %define _stablekver 54
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 2
 %define flaver clts%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -51,11 +51,11 @@ Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stab
 #Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
 #Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
-Patch1: https://raw.githubusercontent.com/sirlucjan/copr-linux-cachyos/master/sources/patches/LTS/0001-zstd-%{_basekver}-merge-v1.5.5-into-kernel-tree.patch
+#Patch1: https://raw.githubusercontent.com/sirlucjan/copr-linux-cachyos/master/sources/patches/LTS/0001-zstd-%{_basekver}-merge-v1.5.5-into-kernel-tree.patch
 #Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/0001-Add-latency-priority-for-CFS-class.patch
 Patch2: https://raw.githubusercontent.com/sirlucjan/copr-linux-cachyos/master/sources/patches/LTS/0001-Add-latency-priority-for-CFS-class.patch
-#Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
-Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
+Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
+#Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
 #Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore.patch
 #Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
@@ -139,7 +139,7 @@ This meta package is used to install matching core and devel packages for a give
 patch -p1 -i %{PATCH0}
 
 # Apply ZSTD patch
-patch -p1 -i %{PATCH1}
+#patch -p1 -i %{PATCH1}
 
 # Apply BORE (main and sysctl) patches
 patch -p1 -i %{PATCH2}
