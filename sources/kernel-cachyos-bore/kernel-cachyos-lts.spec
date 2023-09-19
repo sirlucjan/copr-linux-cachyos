@@ -60,13 +60,49 @@ Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basek
 #Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
 %define debug_package %{nil}
-BuildRequires: python3-devel make perl-generators perl-interpreter openssl-devel bison flex findutils git-core perl-devel openssl elfutils-devel gawk binutils m4 tar hostname bzip2 bash gzip xz bc diffutils redhat-rpm-config net-tools elfutils patch rpm-build dwarves kmod libkcapi-hmaccalc perl-Carp rsync grubby wget
+BuildRequires: python3-devel
+BuildRequires: make
+BuildRequires: perl-generators
+BuildRequires: perl-interpreter
+BuildRequires: openssl-devel 
+BuildRequires: bison
+BuildRequires: flex
+BuildRequires: findutils
+BuildRequires: git-core
+BuildRequires: perl-devel
+BuildRequires: openssl
+BuildRequires: elfutils-devel
+BuildRequires: gawk
+BuildRequires: binutils
+BuildRequires: m4
+BuildRequires: tar
+BuildRequires: hostname
+BuildRequires: bzip2
+BuildRequires: bash
+BuildRequires: gzip
+BuildRequires: xz
+BuildRequires: bc
+BuildRequires: diffutils
+BuildRequires: redhat-rpm-config
+BuildRequires: net-tools
+BuildRequires: elfutils
+BuildRequires: patch
+BuildRequires: rpm-build
+BuildRequires: dwarves
+BuildRequires: kmod
+BuildRequires: libkcapi-hmaccalc
+BuildRequires: perl-Carp
+BuildRequires: rsync
+BuildRequires: grubby
+BuildRequires: wget 
+BuildRequires: gcc
 %if %{llvm_kbuild}
-BuildRequires: llvm%{_isa} lld%{_isa} clang%{_isa}
-%else
-BuildRequires: gcc%{_isa}
+BuildRequires: llvm
+BuildRequires: clang
+BuildRequires: lld
 %endif
-Requires: %{name}-core-%{rpmver} = %{kverstr}, %{name}-modules-%{rpmver} = %{kverstr}
+Requires: %{name}-core-%{rpmver} = %{kverstr}
+Requires: %{name}-modules-%{rpmver} = %{kverstr}
 Provides: %{name}%{_basekver} = %{rpmver}
 
 %description
@@ -75,10 +111,24 @@ The kernel-%{flaver} meta package
 %package core
 Summary: Kernel core package
 Group: System Environment/Kernel
-Provides: installonlypkg(kernel), kernel = %{rpmver}, kernel-core = %{rpmver}, kernel-core-uname-r = %{kverstr}, kernel-uname-r = %{kverstr}, kernel-%{_arch} = %{rpmver}, kernel-core%{_isa} = %{rpmver}, kernel-core-%{rpmver} = %{kverstr}, %{name}-core-%{rpmver} = %{kverstr}, kernel-drm-nouveau = 16
+Provides: installonlypkg(kernel)
+Provides: kernel = %{rpmver}
+Provides: kernel-core = %{rpmver}
+Provides: kernel-core-uname-r = %{kverstr}
+Provides: kernel-uname-r = %{kverstr}
+Provides: kernel-%{_arch} = %{rpmver}
+Provides: kernel-core%{_isa} = %{rpmver}
+Provides: kernel-core-%{rpmver} = %{kverstr}
+Provides: %{name}-core-%{rpmver} = %{kverstr}
+Provides:  kernel-drm-nouveau = 16
 # multiver
 Provides: %{name}%{_basekver}-core = %{rpmver}
-Requires: bash, coreutils, dracut, linux-firmware, /usr/bin/kernel-install, kernel-modules-%{rpmver} = %{kverstr}
+Requires: bash
+Requires: coreutils
+Requires: dracut
+Requires: linux-firmware
+Requires: /usr/bin/kernel-install
+Requires: kernel-modules-%{rpmver} = %{kverstr}
 Supplements: %{name} = %{rpmver}
 %description core
 The kernel package contains the Linux kernel (vmlinuz), the core of any
@@ -89,8 +139,14 @@ input and output, etc.
 %package modules
 Summary: Kernel modules to match the core kernel
 Group: System Environment/Kernel
-Provides: installonlypkg(kernel-module), kernel-modules = %{rpmver}, kernel-modules%{_isa} = %{rpmver}, kernel-modules-uname-r = %{kverstr}, kernel-modules-%{_arch} = %{rpmver}, kernel-modules-%{rpmver} = %{kverstr}, %{name}-modules-%{rpmver} = %{kverstr}
+Provides: installonlypkg(kernel-module)
 Provides: %{name}%{_basekver}-modules = %{rpmver}
+Provides: kernel-modules = %{rpmver}
+Provides: kernel-modules%{_isa} = %{rpmver}
+Provides: kernel-modules-uname-r = %{kverstr}
+Provides: kernel-modules-%{_arch} = %{rpmver}
+Provides: kernel-modules-%{rpmver} = %{kverstr}
+Provides: %{name}-modules-%{rpmver} = %{kverstr}
 Supplements: %{name} = %{rpmver}
 %description modules
 This package provides kernel modules for the core %{?flavor:%{flavor}} kernel package.
@@ -98,8 +154,11 @@ This package provides kernel modules for the core %{?flavor:%{flavor}} kernel pa
 %package headers
 Summary: Header files for the Linux kernel for use by glibc
 Group: Development/System
-Provides: kernel-headers = %{kverstr}, glibc-kernheaders = 3.0-46, kernel-headers%{_isa} = %{kverstr}
-Obsoletes: kernel-headers < %{kverstr}, glibc-kernheaders < 3.0-46
+Provides: kernel-headers = %{kverstr}
+Provides: glibc-kernheaders = 3.0-46
+Provides: kernel-headers%{_isa} = %{kverstr}
+Obsoletes: kernel-headers < %{kverstr}
+Obsoletes: glibc-kernheaders < 3.0-46
 %description headers
 Kernel-headers includes the C header files that specify the interface
 between the Linux kernel and userspace libraries and programs.  The
@@ -111,14 +170,28 @@ glibc package.
 Summary: Development package for building kernel modules to match the %{?flavor:%{flavor}} kernel
 Group: System Environment/Kernel
 AutoReqProv: no
-Requires: findutils perl-interpreter openssl-devel flex make bison elfutils-libelf-devel
+Requires: findutils      
+Requires: perl-interpreter
+Requires: openssl-devel
+Requires: flex
+Requires: make
+Requires: bison
+Requires: elfutils-libelf-devel
+Requires: gcc
 %if %{llvm_kbuild}
-Requires: llvm%{_isa} lld%{_isa} clang%{_isa}
-%else
-Requires: gcc%{_isa}
+Requires: clang
+Requires: llvm
+Requires: lld
 %endif
-Enhances: dkms akmods
-Provides: installonlypkg(kernel), kernel-devel = %{rpmver}, kernel-devel-uname-r = %{kverstr}, kernel-devel-%{_arch} = %{rpmver}, kernel-devel%{_isa} = %{rpmver}, kernel-devel-%{rpmver} = %{kverstr}, %{name}-devel-%{rpmver} = %{kverstr}
+Enhances: akmods
+Enhances: dkms
+Provides: installonlypkg(kernel)
+Provides: kernel-devel = %{rpmver}
+Provides: kernel-devel-uname-r = %{kverstr}
+Provides: kernel-devel-%{_arch} = %{rpmver}
+Provides: kernel-devel%{_isa} = %{rpmver}
+Provides: kernel-devel-%{rpmver} = %{kverstr}
+Provides: %{name}-devel-%{rpmver} = %{kverstr}
 Provides: %{name}%{_basekver}-devel = %{rpmver}
 %description devel
 This package provides kernel headers and makefiles sufficient to build modules
@@ -126,8 +199,10 @@ against the %{?flavor:%{flavor}} kernel package.
 
 %package devel-matched
 Summary: Meta package to install matching core and devel packages for a given %{?flavor:%{flavor}} kernel
-Requires: %{name}-devel = %{rpmver}, %{name}-core = %{rpmver}
-Provides: kernel-devel-matched = %{rpmver}, kernel-devel-matched%{_isa} = %{rpmver}
+Requires: %{name}-devel = %{rpmver},
+Requires: %{name}-core = %{rpmver}
+Provides: kernel-devel-matched = %{rpmver}
+Provides: kernel-devel-matched%{_isa} = %{rpmver}
 %description devel-matched
 This meta package is used to install matching core and devel packages for a given %{?flavor:%{flavor}} kernel.
 
