@@ -31,10 +31,10 @@ Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos Patches
 
 %define _basekver 6.1
-%define _stablekver 53
+%define _stablekver 54
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 3
+%define customver 1
 %define flaver clts%{customver}
 
 Release:%{flaver}.0%{?dist}
