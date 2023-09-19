@@ -239,19 +239,6 @@ scripts/config -d HZ_300
 scripts/config -e HZ_500
 scripts/config --set-val HZ 500
 
-# Enable bbr3
-scripts/config -m TCP_CONG_CUBIC
-scripts/config -d DEFAULT_CUBIC
-scripts/config -e TCP_CONG_BBR
-scripts/config -e DEFAULT_BBR
-scripts/config --set-str DEFAULT_TCP_CONG bbr
-# Switch into FQ - bbr3 doesn't work properly with FQ_CODEL
-scripts/config -m NET_SCH_FQ_CODEL
-scripts/config -e NET_SCH_FQ
-scripts/config -d DEFAULT_FQ_CODEL
-scripts/config -e DEFAULT_FQ
-scripts/config --set-str DEFAULT_NET_SCH fq
-
 # Disable DEBUG
 scripts/config -d DEBUG_INFO
 scripts/config -d DEBUG_INFO_BTF
