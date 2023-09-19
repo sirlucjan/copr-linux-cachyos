@@ -568,7 +568,7 @@ if [ `uname -i` == "x86_64" -o `uname -i` == "i386" ] &&
    [ -f /etc/sysconfig/kernel ]; then
   /bin/sed -r -i -e 's/^DEFAULTKERNEL=kernel-smp$/DEFAULTKERNEL=kernel/' /etc/sysconfig/kernel || exit $?
 fi
-/bin/kernel-install add %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
+
 
 %posttrans core
 if [ -d "/ostree" ]; then
@@ -577,6 +577,7 @@ else
     grubby --set-default="/boot/vmlinuz-%{kverstr}"
   fi
 fi
+/bin/kernel-install add %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
 
 %preun core
 /bin/kernel-install remove %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
