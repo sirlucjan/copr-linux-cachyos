@@ -34,7 +34,7 @@ Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 %define _stablekver 4
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 3
+%define customver 1
 %define flaver cbe%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -568,16 +568,12 @@ if [ `uname -i` == "x86_64" -o `uname -i` == "i386" ] &&
    [ -f /etc/sysconfig/kernel ]; then
   /bin/sed -r -i -e 's/^DEFAULTKERNEL=kernel-smp$/DEFAULTKERNEL=kernel/' /etc/sysconfig/kernel || exit $?
 fi
-
+/bin/kernel-install add %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
 
 %posttrans core
-if [ -d "/ostree" ]; then
-else
-  if [ ! -z $(rpm -qa | grep grubby) ]; then
-    grubby --set-default="/boot/vmlinuz-%{kverstr}"
-  fi
+if [ ! -z $(rpm -qa | grep grubby) ]; then
+  grubby --set-default="/boot/vmlinuz-%{kverstr}"
 fi
-/bin/kernel-install add %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
 
 %preun core
 /bin/kernel-install remove %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
