@@ -561,17 +561,12 @@ if [ `uname -i` == "x86_64" -o `uname -i` == "i386" ] &&
    [ -f /etc/sysconfig/kernel ]; then
   /bin/sed -r -i -e 's/^DEFAULTKERNEL=kernel-smp$/DEFAULTKERNEL=kernel/' /etc/sysconfig/kernel || exit $?
 fi
+/bin/kernel-install add %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
 
 %posttrans core
-# checking if the package is being installed on an immutable distro, such as Silverblue or Kinoite. This can be done by checking, if /usr/etc exists, which is typical for immutable distros.
-if [ -d %{buildroot}/usr/etc ]; then
-    # don't set default kernel. This is done automatically on Silverblue etc.
-else
-    if [ ! -z $(rpm -qa | grep grubby) ]; then
-      grubby --set-default="/boot/vmlinuz-%{kverstr}"
-    fi
+if [ ! -z $(rpm -qa | grep grubby) ]; then
+  grubby --set-default="/boot/vmlinuz-%{kverstr}"
 fi
-/bin/kernel-install add %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
 
 %preun core
 /bin/kernel-install remove %{kverstr} /lib/modules/%{kverstr}/vmlinuz || exit $?
