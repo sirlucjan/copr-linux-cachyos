@@ -217,7 +217,7 @@ patch -p1 -i %{PATCH1}
 patch -p1 -i %{PATCH2}
 
 # Fetch the config and move it to the proper directory
-cp ${SOURCE1} .config
+cp %{SOURCE1} .config
 
 # Remove CachyOS's localversion
 find . -name "localversion*" -delete
