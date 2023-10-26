@@ -9,6 +9,11 @@ echo -e "\n"
 echo -e "Check CPU config:\n"
 zgrep -i CONFIG_GENERIC_CPU /proc/config.gz | grep -wE '\w{18,19}'
 echo -e "\n"
-echo -e "Check available schedulers:\n"
-cat /sys/block/sda/queue/scheduler
+echo -e "Current disk schedulers:\n"
+for disk in /sys/block/*/; do
+    if [[ -f $disk/queue/scheduler ]]; then
+        echo "`basename "$disk"`: `cat $disk/queue/scheduler`"
+    fi
+done
+echo -e "\nCheck available schedulers:\n"
 journalctl -k | grep -i scheduler

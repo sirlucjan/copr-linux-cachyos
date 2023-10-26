@@ -1,7 +1,7 @@
 %define _disable_source_fetch 0
 
 Name:           kerver
-Version:        1
+Version:        1.1
 Release:        1%{?dist}
 Summary:        Kernel information script
 
