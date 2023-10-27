@@ -261,9 +261,10 @@ scripts/config -d PM_SLEEP_DEBUG
 scripts/config -d ACPI_DEBUG
 scripts/config -d LATENCYTOP
 scripts/config -d DEBUG_PREEMPT
+scripts/config -d SCHED_DEBUG
 
 # Enable SCHED_DEBUG for BORE 3.2.9 to work
-scripts/config -e SCHED_DEBUG
+#scripts/config -e SCHED_DEBUG
 
 # Enable x86_64_v3
 # Just to be sure, check:
