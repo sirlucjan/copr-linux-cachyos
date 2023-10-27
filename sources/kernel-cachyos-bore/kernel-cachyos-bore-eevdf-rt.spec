@@ -294,9 +294,9 @@ scripts/config -d PREEMPT_VOLUNTARY
 scripts/config -d PREEMPT
 scripts/config -d PREEMPT_NONE
 scripts/config -e PREEMPT_RT
-scripts/config -e PREEMPT_LAZY
+scripts/config -e PREEMPT_AUTO
 scripts/config -d PREEMPT_DYNAMIC
-scripts/config -e HAVE_PREEMPT_LAZY
+scripts/config -e HAVE_PREEMPT_AUTO
 scripts/config -d PREEMPT_BUILD
 
 # Unset hostname
