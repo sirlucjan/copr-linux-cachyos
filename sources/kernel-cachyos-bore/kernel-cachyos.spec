@@ -30,11 +30,11 @@
 Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 
-%define _basekver 6.5
-%define _stablekver 7
+%define _basekver 6.6
+%define _stablekver 0
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 3
+%define customver 1
 %define flaver cbe%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -47,14 +47,16 @@ License: GPLv2 and Redistributable, no modifications permitted
 Group: System Environment/Kernel
 Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
-Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
+#Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
+Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
 Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-eevdf/config
-#Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
+# Stable patches
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
-#Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
+Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
 #Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF.patch
-Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF-cachy.patch
-Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-eevdf.patch
+#Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF-cachy.patch
+# Dev patches
+#Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
 #Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-eevdf.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
 %define debug_package %{nil}
@@ -219,15 +221,15 @@ Provides: kernel-cachyos-bore-devel-matched >= 6.5.9-cb1.0
 This meta package is used to install matching core and devel packages for a given %{?flavor:%{flavor}} kernel.
 
 %prep
-%setup -q -n linux-%{_basekver}.%{_stablekver}
-#%setup -q -n linux-%{_basekver}
+#%setup -q -n linux-%{_basekver}.%{_stablekver}
+%setup -q -n linux-%{_basekver}
 
 # Apply CachyOS patch
 patch -p1 -i %{PATCH0}
 
 # Apply EEVDF and BORE patches
 patch -p1 -i %{PATCH1}
-patch -p1 -i %{PATCH2}
+#patch -p1 -i %{PATCH2}
 
 # Fetch the config and move it to the proper directory
 cp %{SOURCE1} .config
