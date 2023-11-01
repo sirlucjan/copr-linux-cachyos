@@ -53,6 +53,7 @@ Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-ca
 # Stable patches
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
 Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/0001-rt.patch
+Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.6/sched/0001-bore-cachy-rt.patch
 #Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF.patch
 #Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF-cachy.patch
 #Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-eevdf.patch
@@ -106,7 +107,7 @@ Requires: %{name}-core-%{rpmver} = %{kverstr}
 Requires: %{name}-modules-%{rpmver} = %{kverstr}
 Provides: %{name}%{_basekver} = %{rpmver}
 Provides: kernel-cachyos-bore-eevdf-rt >= 6.5.7-cbert1.0 
-Obsoletes: kernel-cachyos-bore-eevdf-rt <= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt <= 6.5.9-cbert1.0
 
 %description
 The kernel-%{flaver} meta package
@@ -134,7 +135,7 @@ Requires: /usr/bin/kernel-install
 Requires: kernel-modules-%{rpmver} = %{kverstr}
 Supplements: %{name} = %{rpmver}
 Provides: kernel-cachyos-bore-eevdf-rt-core >= 6.5.7-cbert1.0
-Obsoletes: kernel-cachyos-bore-eevdf-rt-core <= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt-core <= 6.5.9-cbert1.0
 %description core
 The kernel package contains the Linux kernel (vmlinuz), the core of any
 Linux operating system.  The kernel handles the basic functions
@@ -153,7 +154,7 @@ Provides: kernel-modules-%{_arch} = %{rpmver}
 Provides: kernel-modules-%{rpmver} = %{kverstr}
 Provides: %{name}-modules-%{rpmver} = %{kverstr}
 Provides: kernel-cachyos-bore-eevdf-rt-modules >= 6.5.7-cbert1.0
-Obsoletes: kernel-cachyos-bore-eevdf-rt-modules <= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt-modules <= 6.5.9-cbert1.0
 Supplements: %{name} = %{rpmver}
 %description modules
 This package provides kernel modules for the core %{?flavor:%{flavor}} kernel package.
@@ -167,7 +168,7 @@ Provides: kernel-headers%{_isa} = %{kverstr}
 Obsoletes: kernel-headers < %{kverstr}
 Obsoletes: glibc-kernheaders < 3.0-46
 Provides: kernel-cachyos-bore-eevdf-rt-headers >= 6.5.7-cbert1.0
-Obsoletes: kernel-cachyos-bore-eevdf-rt-headers <= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt-headers <= 6.5.9-cbert1.0
 %description headers
 Kernel-headers includes the C header files that specify the interface
 between the Linux kernel and userspace libraries and programs.  The
@@ -203,7 +204,7 @@ Provides: kernel-devel-%{rpmver} = %{kverstr}
 Provides: %{name}-devel-%{rpmver} = %{kverstr}
 Provides: %{name}%{_basekver}-devel = %{rpmver}
 Provides: kernel-cachyos-bore-eevdf-rt-devel >= 6.5.7-cbert1.0 
-Obsoletes: kernel-cachyos-bore-eevdf-rt-devel <= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt-devel <= 6.5.9-cbert1.0
 %description devel
 This package provides kernel headers and makefiles sufficient to build modules
 against the %{?flavor:%{flavor}} kernel package.
@@ -215,7 +216,7 @@ Requires: %{name}-core = %{rpmver}
 Provides: kernel-devel-matched = %{rpmver}
 Provides: kernel-devel-matched%{_isa} = %{rpmver}
 Provides: kernel-cachyos-bore-eevdf-rt-devel-matched >= 6.5.7-cbert1.0
-Obsoletes: kernel-cachyos-bore-eevdf-rt-devel-matched <= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt-devel-matched <= 6.5.9-cbert1.0
 %description devel-matched
 This meta package is used to install matching core and devel packages for a given %{?flavor:%{flavor}} kernel.
 
@@ -228,7 +229,7 @@ patch -p1 -i %{PATCH0}
 
 # Apply EEVDF and BORE patches
 patch -p1 -i %{PATCH1}
-#patch -p1 -i %{PATCH2}
+patch -p1 -i %{PATCH2}
 #patch -p1 -i %{PATCH3}
 
 # Fetch the config and move it to the proper directory
