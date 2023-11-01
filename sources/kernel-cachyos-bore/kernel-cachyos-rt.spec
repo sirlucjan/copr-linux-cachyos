@@ -22,9 +22,8 @@
 %define asmarch x86
 %endif
 
-# whether to use LLVM-built kernel package dependencies
-# The flag is not working as it should - if you want the LTO kernels to re-visit the repository, send a proper pull request.
-#%define llvm_kbuild 0
+# whether to build kernel with llvm compiler(clang)
+%define llvm_kbuild 0
 
 %define flavor cachyos-rt
 Name: kernel%{?flavor:-%{flavor}}
@@ -314,6 +313,19 @@ scripts/config -d PREEMPT_DYNAMIC
 scripts/config -e HAVE_PREEMPT_AUTO
 scripts/config -d PREEMPT_BUILD
 
+# Enable thin lto
+%if %{llvm_kbuild}
+scripts/config -e LTO
+scripts/config -e LTO_CLANG
+scripts/config -e ARCH_SUPPORTS_LTO_CLANG
+scripts/config -e ARCH_SUPPORTS_LTO_CLANG_THIN
+scripts/config -d LTO_NONE
+scripts/config -e HAS_LTO_CLANG
+scripts/config -d LTO_CLANG_FULL
+scripts/config -e LTO_CLANG_THIN
+scripts/config -e HAVE_GCC_PLUGINS
+%endif
+
 # Unset hostname
 scripts/config -u DEFAULT_HOSTNAME
 
@@ -331,8 +343,15 @@ make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
 cat .config > config-linux-bore
 
 %build
+%if %{llvm_kbuild}
+make CC=clang AR=llvm-ar NM=llvm-nm STRIP=llvm-strip \
+  OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump READELF=llvm-readelf \
+  HOSTCC=clang HOSTCXX=clang++ HOSTAR=llvm-ar %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
+clang ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
+%else
 make %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 gcc ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
+%endif
 
 %install
 
