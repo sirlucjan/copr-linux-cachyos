@@ -1,9 +1,9 @@
-### A port of linux-cachyos-bore (https://github.com/CachyOS/linux-cachyos/tree/master/linux-cachyos-bore) for the Fedora operating system.
+### A port of linux-cachyos (https://github.com/CachyOS/linux-cachyos/tree/master/linux-cachyos) for the Fedora operating system.
 # https://github.com/CachyOS/linux-cachyos
 ### The authors of linux-cachyos patchset:
 # Peter Jung ptr1337 <admin@ptr1337.dev>
 # Piotr Gorski sirlucjan <piotrgorski@cachyos.org>
-### The author of BORE Scheduler:
+### The author of BORE-EEVDF Scheduler:
 # Masahito Suzuki <firelzrd@gmail.com>
 ### The port maintainer for Fedora:
 # bieszczaders <zbyszek@linux.pl>
@@ -22,20 +22,19 @@
 %define asmarch x86
 %endif
 
-# whether to use LLVM-built kernel package dependencies
-# The flag is not working as it should - if you want the LTO kernels to re-visit the repository, send a proper pull request.
-#%define llvm_kbuild 0
+# whether to build kernel with llvm compiler(clang)
+%define llvm_kbuild 0
 
-%define flavor cachyos-bore
+%define flavor cachyos-rt
 Name: kernel%{?flavor:-%{flavor}}
-Summary: The Linux Kernel with Cachyos-BORE Patches
+Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 
-%define _basekver 6.5
-%define _stablekver 9
+%define _basekver 6.6
+%define _stablekver 0
 Version: %{_basekver}.%{_stablekver}
 
 %define customver 1
-%define flaver cb%{customver}
+%define flaver cbrt%{customver}
 
 Release:%{flaver}.0%{?dist}
 
@@ -47,16 +46,19 @@ License: GPLv2 and Redistributable, no modifications permitted
 Group: System Environment/Kernel
 Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
-Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
-Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-bore/config
-#Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
+#Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
+Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
+Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-rt/config
+# Stable patches
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
+Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/0001-rt.patch
+Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.6/sched/0001-bore-cachy-rt.patch
+#Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF.patch
+#Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF-cachy.patch
+#Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-eevdf.patch
+# Dev patches
 #Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
-Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/0001-bore-tuning-sysctl.patch
-Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
-#Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
-#Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore.patch
-#Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore.patch
+#Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-eevdf.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
 %define debug_package %{nil}
 BuildRequires: python3-devel
@@ -103,6 +105,8 @@ BuildRequires: lld
 Requires: %{name}-core-%{rpmver} = %{kverstr}
 Requires: %{name}-modules-%{rpmver} = %{kverstr}
 Provides: %{name}%{_basekver} = %{rpmver}
+Provides: kernel-cachyos-bore-eevdf-rt >= 6.5.7-cbert1.0 
+Obsoletes: kernel-cachyos-bore-eevdf-rt <= 6.5.9-cbert1.0
 
 %description
 The kernel-%{flaver} meta package
@@ -129,6 +133,8 @@ Requires: linux-firmware
 Requires: /usr/bin/kernel-install
 Requires: kernel-modules-%{rpmver} = %{kverstr}
 Supplements: %{name} = %{rpmver}
+Provides: kernel-cachyos-bore-eevdf-rt-core >= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt-core <= 6.5.9-cbert1.0
 %description core
 The kernel package contains the Linux kernel (vmlinuz), the core of any
 Linux operating system.  The kernel handles the basic functions
@@ -146,6 +152,8 @@ Provides: kernel-modules-uname-r = %{kverstr}
 Provides: kernel-modules-%{_arch} = %{rpmver}
 Provides: kernel-modules-%{rpmver} = %{kverstr}
 Provides: %{name}-modules-%{rpmver} = %{kverstr}
+Provides: kernel-cachyos-bore-eevdf-rt-modules >= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt-modules <= 6.5.9-cbert1.0
 Supplements: %{name} = %{rpmver}
 %description modules
 This package provides kernel modules for the core %{?flavor:%{flavor}} kernel package.
@@ -158,6 +166,8 @@ Provides: glibc-kernheaders = 3.0-46
 Provides: kernel-headers%{_isa} = %{kverstr}
 Obsoletes: kernel-headers < %{kverstr}
 Obsoletes: glibc-kernheaders < 3.0-46
+Provides: kernel-cachyos-bore-eevdf-rt-headers >= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt-headers <= 6.5.9-cbert1.0
 %description headers
 Kernel-headers includes the C header files that specify the interface
 between the Linux kernel and userspace libraries and programs.  The
@@ -192,6 +202,8 @@ Provides: kernel-devel%{_isa} = %{rpmver}
 Provides: kernel-devel-%{rpmver} = %{kverstr}
 Provides: %{name}-devel-%{rpmver} = %{kverstr}
 Provides: %{name}%{_basekver}-devel = %{rpmver}
+Provides: kernel-cachyos-bore-eevdf-rt-devel >= 6.5.7-cbert1.0 
+Obsoletes: kernel-cachyos-bore-eevdf-rt-devel <= 6.5.9-cbert1.0
 %description devel
 This package provides kernel headers and makefiles sufficient to build modules
 against the %{?flavor:%{flavor}} kernel package.
@@ -202,19 +214,22 @@ Requires: %{name}-devel = %{rpmver},
 Requires: %{name}-core = %{rpmver}
 Provides: kernel-devel-matched = %{rpmver}
 Provides: kernel-devel-matched%{_isa} = %{rpmver}
+Provides: kernel-cachyos-bore-eevdf-rt-devel-matched >= 6.5.7-cbert1.0
+Obsoletes: kernel-cachyos-bore-eevdf-rt-devel-matched <= 6.5.9-cbert1.0
 %description devel-matched
 This meta package is used to install matching core and devel packages for a given %{?flavor:%{flavor}} kernel.
 
 %prep
-%setup -q -n linux-%{_basekver}.%{_stablekver}
-#%setup -q -n linux-%{_basekver}
+#%setup -q -n linux-%{_basekver}.%{_stablekver}
+%setup -q -n linux-%{_basekver}
 
 # Apply CachyOS patch
 patch -p1 -i %{PATCH0}
 
-# Apply BORE (main and sysctl) patches
+# Apply EEVDF and BORE patches
 patch -p1 -i %{PATCH1}
 patch -p1 -i %{PATCH2}
+#patch -p1 -i %{PATCH3}
 
 # Fetch the config and move it to the proper directory
 cp %{SOURCE1} .config
@@ -259,12 +274,9 @@ scripts/config -d PM_DEBUG
 scripts/config -d PM_ADVANCED_DEBUG
 scripts/config -d PM_SLEEP_DEBUG
 scripts/config -d ACPI_DEBUG
+scripts/config -d SCHED_DEBUG
 scripts/config -d LATENCYTOP
 scripts/config -d DEBUG_PREEMPT
-scripts/config -d SCHED_DEBUG
-
-# Enable SCHED_DEBUG for BORE 3.2.9 to work
-#scripts/config -e SCHED_DEBUG
 
 # Enable x86_64_v3
 # Just to be sure, check:
@@ -282,24 +294,37 @@ scripts/config -e CPU_FREQ_DEFAULT_GOV_PERFORMANCE
 scripts/config -d CC_OPTIMIZE_FOR_PERFORMANCE
 scripts/config -e CC_OPTIMIZE_FOR_PERFORMANCE_O3
 
-# Enable full ticks
+# Enable idle ticks
 scripts/config -d HZ_PERIODIC
-scripts/config -d NO_HZ_IDLE
-scripts/config -d CONTEXT_TRACKING_FORCE
-scripts/config -e NO_HZ_FULL_NODEF
-scripts/config -e NO_HZ_FULL
+scripts/config -d NO_HZ_FULL
+scripts/config -e NO_HZ_IDLE
 scripts/config -e NO_HZ
 scripts/config -e NO_HZ_COMMON
-scripts/config -e CONTEXT_TRACKING
 
-# Enable full preempt
-scripts/config -e PREEMPT_BUILD
-scripts/config -d PREEMPT_NONE
-scripts/config -d PREEMPT_VOLUNTARY
-scripts/config -e PREEMPT
+# Enable RT config
 scripts/config -e PREEMPT_COUNT
 scripts/config -e PREEMPTION
-scripts/config -e PREEMPT_DYNAMIC
+scripts/config -d PREEMPT_VOLUNTARY
+scripts/config -d PREEMPT
+scripts/config -d PREEMPT_NONE
+scripts/config -e PREEMPT_RT
+scripts/config -e PREEMPT_AUTO
+scripts/config -d PREEMPT_DYNAMIC
+scripts/config -e HAVE_PREEMPT_AUTO
+scripts/config -d PREEMPT_BUILD
+
+# Enable thin lto
+%if %{llvm_kbuild}
+scripts/config -e LTO
+scripts/config -e LTO_CLANG
+scripts/config -e ARCH_SUPPORTS_LTO_CLANG
+scripts/config -e ARCH_SUPPORTS_LTO_CLANG_THIN
+scripts/config -d LTO_NONE
+scripts/config -e HAS_LTO_CLANG
+scripts/config -d LTO_CLANG_FULL
+scripts/config -e LTO_CLANG_THIN
+scripts/config -e HAVE_GCC_PLUGINS
+%endif
 
 # Unset hostname
 scripts/config -u DEFAULT_HOSTNAME
@@ -318,8 +343,15 @@ make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
 cat .config > config-linux-bore
 
 %build
+%if %{llvm_kbuild}
+make CC=clang AR=llvm-ar NM=llvm-nm STRIP=llvm-strip \
+  OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump READELF=llvm-readelf \
+  HOSTCC=clang HOSTCXX=clang++ HOSTAR=llvm-ar %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
+clang ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
+%else
 make %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 gcc ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
+%endif
 
 %install
 
