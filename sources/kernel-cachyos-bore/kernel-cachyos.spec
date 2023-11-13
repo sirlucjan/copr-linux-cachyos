@@ -353,9 +353,7 @@ cat .config > config-linux-bore
 
 %build
 %if %{llvm_kbuild}
-make CC=clang AR=llvm-ar NM=llvm-nm STRIP=llvm-strip \
-  OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump READELF=llvm-readelf \
-  HOSTCC=clang HOSTCXX=clang++ HOSTAR=llvm-ar %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
+make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 clang ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 %else
 make %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
