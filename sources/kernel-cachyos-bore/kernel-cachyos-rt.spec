@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 %define _stablekver 1
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 3
+%define customver 4
 %define flaver cbrt%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -308,9 +308,9 @@ scripts/config -d PREEMPT_VOLUNTARY
 scripts/config -d PREEMPT
 scripts/config -d PREEMPT_NONE
 scripts/config -e PREEMPT_RT
-scripts/config -e PREEMPT_AUTO
+scripts/config -d PREEMPT_AUTO
 scripts/config -d PREEMPT_DYNAMIC
-scripts/config -e HAVE_PREEMPT_AUTO
+scripts/config -d HAVE_PREEMPT_AUTO
 scripts/config -d PREEMPT_BUILD
 
 # Enable thin lto
