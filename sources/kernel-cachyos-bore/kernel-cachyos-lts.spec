@@ -1,9 +1,9 @@
-### A port of linux-cachyos-bore (https://github.com/CachyOS/linux-cachyos/tree/master/linux-cachyos-bore) for the Fedora operating system.
+### A port of linux-cachyos-lts (https://github.com/CachyOS/linux-cachyos/tree/master/linux-cachyos-lts) for the Fedora operating system.
 # https://github.com/CachyOS/linux-cachyos
 ### The authors of linux-cachyos patchset:
 # Peter Jung ptr1337 <admin@ptr1337.dev>
 # Piotr Gorski sirlucjan <piotrgorski@cachyos.org>
-### The author of BORE Scheduler:
+### The author of BORE-EEVDF Scheduler:
 # Masahito Suzuki <firelzrd@gmail.com>
 ### The port maintainer for Fedora:
 # bieszczaders <zbyszek@linux.pl>
@@ -22,16 +22,15 @@
 %define asmarch x86
 %endif
 
-# whether to use LLVM-built kernel package dependencies
-# The flag is not working as it should - if you want the LTO kernels to re-visit the repository, send a proper pull request.
-#%define llvm_kbuild 0
+# whether to build kernel with llvm compiler(clang)
+%define llvm_kbuild 0
 
 %define flavor cachyos-lts
 Name: kernel%{?flavor:-%{flavor}}
-Summary: The Linux Kernel with Cachyos Patches
+Summary: The Linux Kernel with Cachyos-LTS Patches
 
-%define _basekver 6.1
-%define _stablekver 71
+%define _basekver 6.6
+%define _stablekver 10
 Version: %{_basekver}.%{_stablekver}
 
 %define customver 1
@@ -48,17 +47,16 @@ Group: System Environment/Kernel
 Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
 Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
-Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-lts/config
 #Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
+Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-lts/config
+# Stable patches
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
+Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
+#Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF.patch
+#Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF-cachy.patch
+# Dev patches
 #Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
-#Patch1: https://raw.githubusercontent.com/sirlucjan/copr-linux-cachyos/master/sources/patches/LTS/0001-zstd-%{_basekver}-merge-v1.5.5-into-kernel-tree.patch
-Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/0001-Add-latency-priority-for-CFS-class.patch
-#Patch2: https://raw.githubusercontent.com/sirlucjan/copr-linux-cachyos/master/sources/patches/LTS/0001-Add-latency-priority-for-CFS-class.patch
-#Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
-Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
-#Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore.patch
-#Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore.patch
+#Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
 %define debug_package %{nil}
 BuildRequires: python3-devel
@@ -105,6 +103,7 @@ BuildRequires: lld
 Requires: %{name}-core-%{rpmver} = %{kverstr}
 Requires: %{name}-modules-%{rpmver} = %{kverstr}
 Provides: %{name}%{_basekver} = %{rpmver}
+
 
 %description
 The kernel-%{flaver} meta package
@@ -160,6 +159,7 @@ Provides: glibc-kernheaders = 3.0-46
 Provides: kernel-headers%{_isa} = %{kverstr}
 Obsoletes: kernel-headers < %{kverstr}
 Obsoletes: glibc-kernheaders < 3.0-46
+
 %description headers
 Kernel-headers includes the C header files that specify the interface
 between the Linux kernel and userspace libraries and programs.  The
@@ -204,6 +204,7 @@ Requires: %{name}-devel = %{rpmver},
 Requires: %{name}-core = %{rpmver}
 Provides: kernel-devel-matched = %{rpmver}
 Provides: kernel-devel-matched%{_isa} = %{rpmver}
+
 %description devel-matched
 This meta package is used to install matching core and devel packages for a given %{?flavor:%{flavor}} kernel.
 
@@ -214,12 +215,9 @@ This meta package is used to install matching core and devel packages for a give
 # Apply CachyOS patch
 patch -p1 -i %{PATCH0}
 
-# Apply ZSTD patch
-#patch -p1 -i %{PATCH1}
-
-# Apply BORE (main and sysctl) patches
-patch -p1 -i %{PATCH2}
-patch -p1 -i %{PATCH3}
+# Apply EEVDF and BORE patches
+patch -p1 -i %{PATCH1}
+#patch -p1 -i %{PATCH2}
 
 # Fetch the config and move it to the proper directory
 cp %{SOURCE1} .config
@@ -238,6 +236,19 @@ scripts/config -e SCHED_BORE
 scripts/config -d HZ_300
 scripts/config -e HZ_500
 scripts/config --set-val HZ 500
+
+# Enable bbr3
+scripts/config -m TCP_CONG_CUBIC
+scripts/config -d DEFAULT_CUBIC
+scripts/config -e TCP_CONG_BBR
+scripts/config -e DEFAULT_BBR
+scripts/config --set-str DEFAULT_TCP_CONG bbr
+# Switch into FQ - bbr3 doesn't work properly with FQ_CODEL
+scripts/config -m NET_SCH_FQ_CODEL
+scripts/config -e NET_SCH_FQ
+scripts/config -d DEFAULT_FQ_CODEL
+scripts/config -e DEFAULT_FQ
+scripts/config --set-str DEFAULT_NET_SCH fq
 
 # Disable DEBUG
 scripts/config -d DEBUG_INFO
@@ -290,6 +301,19 @@ scripts/config -e PREEMPT_COUNT
 scripts/config -e PREEMPTION
 scripts/config -e PREEMPT_DYNAMIC
 
+# Enable thin lto
+%if %{llvm_kbuild}
+scripts/config -e LTO
+scripts/config -e LTO_CLANG
+scripts/config -e ARCH_SUPPORTS_LTO_CLANG
+scripts/config -e ARCH_SUPPORTS_LTO_CLANG_THIN
+scripts/config -d LTO_NONE
+scripts/config -e HAS_LTO_CLANG
+scripts/config -d LTO_CLANG_FULL
+scripts/config -e LTO_CLANG_THIN
+scripts/config -e HAVE_GCC_PLUGINS
+%endif
+
 # Unset hostname
 scripts/config -u DEFAULT_HOSTNAME
 
@@ -307,8 +331,13 @@ make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
 cat .config > config-linux-bore
 
 %build
+%if %{llvm_kbuild}
+make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
+clang ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
+%else
 make %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 gcc ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
+%endif
 
 %install
 
