@@ -255,8 +255,8 @@ scripts/config -e SCHED_BORE
 
 # Setting tick rate
 scripts/config -d HZ_300
-scripts/config -e HZ_500
-scripts/config --set-val HZ 500
+scripts/config -e HZ_1000
+scripts/config --set-val HZ 1000
 
 # Enable bbr3
 scripts/config -m TCP_CONG_CUBIC
