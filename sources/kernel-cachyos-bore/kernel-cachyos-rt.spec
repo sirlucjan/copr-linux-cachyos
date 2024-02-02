@@ -56,6 +56,7 @@ Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/6.6/sche
 #Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF.patch
 #Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF-cachy.patch
 #Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-eevdf.patch
+Patch4: https://raw.githubusercontent.com/sirlucjan/copr-linux-cachyos/master/sources/patches/0001-NVIDIA-Fixup-GPL-issue.patch
 # Dev patches
 #Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
 #Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy-rt.patch
@@ -230,6 +231,8 @@ patch -p1 -i %{PATCH0}
 patch -p1 -i %{PATCH1}
 patch -p1 -i %{PATCH2}
 #patch -p1 -i %{PATCH3}
+# Apply Nvidia patch temporarily
+patch -p1 -i %{PATCH4}
 
 # Fetch the config and move it to the proper directory
 cp %{SOURCE1} .config
