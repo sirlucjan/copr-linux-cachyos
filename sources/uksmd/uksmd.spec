@@ -11,8 +11,8 @@
 
 Name:           uksmd
 Summary:        Userspace KSM helper daemon (CachyOS branding)
-Version:        1.2.0
-Release:        6%{?dist}
+Version:        1.2.9
+Release:        1%{?dist}
 License:        GPLv3
 URL:            https://github.com/CachyOS/uksmd
 Source0:        %url/archive/v%{version}.tar.gz
@@ -28,7 +28,6 @@ BuildRequires:  procps-ng
 BuildRequires:  procps-ng-devel
 BuildRequires:  systemd
 BuildRequires:  systemd-devel
-BuildRequires:  wget
 Requires:       libcap-ng
 Requires:       libcap-ng-devel
 Requires:       procps-ng
@@ -42,18 +41,16 @@ The mechanism is wrapped around the per-process KSM API that has been introduced
 This requires process_ksm_{enable,disable,status}() syscalls, that are available in kernel-cachyos-bore/kernel-cachyos-bore-lto.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n uksmd-%{version}
 %autosetup -c
 
 %build
-cd %{name}-%{version}
-wget https://raw.githubusercontent.com/sirlucjan/copr-linux-cachyos/master/sources/uksmd/0001-uksmdstats-fixes.patch
-patch -p1 -i 0001-uksmdstats-fixes.patch
+cd uksmd-%{version}
 %meson
 %meson_build
 
 %install
-cd %{name}-%{version}
+cd uksmd-%{version}
 %meson_install
 
 %files
@@ -80,4 +77,5 @@ cd %{name}-%{version}
 
 * Mon Jan 30 2023 lucjan - 1.0.0-1
 - Add uksmd for Fedora
+
 
