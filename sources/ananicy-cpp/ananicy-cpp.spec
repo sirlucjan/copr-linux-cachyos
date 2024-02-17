@@ -8,7 +8,7 @@
 %define _disable_source_fetch 0
 
 Name:           ananicy-cpp
-Release:        2%{?dist}
+Release:        4%{?dist}
 Version:	    1.1.1
 Summary:        Rewrite of ananicy in c++ for lower cpu and memory usage
 License:        GPLv3
@@ -61,6 +61,9 @@ git clone https://github.com/CachyOS/ananicy-rules.git %{_builddir}/ananicy-cpp-
 
 mkdir -p %{buildroot}/etc/ananicy.d/00-default
 cp %{_builddir}/ananicy-cpp-rules/00-default %{buildroot}/etc/ananicy.d/ -r
+cp %{_builddir}/ananicy-cpp-rules/00-cgroups.cgroups %{buildroot}/etc/ananicy.d/ -r
+cp %{_builddir}/ananicy-cpp-rules/00-types.types %{buildroot}/etc/ananicy.d/ -r
+cp %{_builddir}/ananicy-cpp-rules/ananicy.conf %{buildroot}/etc/ananicy.d/ -r
 
 
 
