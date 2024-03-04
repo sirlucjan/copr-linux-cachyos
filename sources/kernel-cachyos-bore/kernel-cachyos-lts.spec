@@ -30,7 +30,7 @@ Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-LTS Patches
 
 %define _basekver 6.6
-%define _stablekver 17
+%define _stablekver 20
 Version: %{_basekver}.%{_stablekver}
 
 %define customver 1
