@@ -29,8 +29,8 @@
 Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 
-%define _basekver 6.7
-%define _stablekver 9
+%define _basekver 6.8
+%define _stablekver 0
 Version: %{_basekver}.%{_stablekver}
 
 %define customver 1
@@ -46,17 +46,17 @@ License: GPLv2 and Redistributable, no modifications permitted
 Group: System Environment/Kernel
 Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
-Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
-#Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
+#Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
+Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
 Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-eevdf/config
 # Stable patches
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
-Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
+#Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
 #Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF.patch
 #Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-EEVDF-cachy.patch
 # Dev patches
 #Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
-#Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
+Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
 %define __spec_install_post /usr/lib/rpm/brp-compress || :
 %define debug_package %{nil}
 BuildRequires: python3-devel
@@ -230,8 +230,8 @@ Obsoletes: kernel-cachyos-bore-devel-matched <= 6.5.10-cb1
 This meta package is used to install matching core and devel packages for a given %{?flavor:%{flavor}} kernel.
 
 %prep
-%setup -q -n linux-%{_basekver}.%{_stablekver}
-#%setup -q -n linux-%{_basekver}
+#%setup -q -n linux-%{_basekver}.%{_stablekver}
+%setup -q -n linux-%{_basekver}
 
 # Apply CachyOS patch
 patch -p1 -i %{PATCH0}
