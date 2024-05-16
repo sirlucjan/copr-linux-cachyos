@@ -18,7 +18,6 @@ This is a port of the CachyOS kernel for Fedora.
 - OpenRGB and ACS Override support.
 - HDR Patches for AMD GPU's and gamescope.
 - Default support for Steam Deck.
-- Lenovo Legion [Patchset](https://github.com/johnfanv2/LenovoLegionLinux)
 
 ### Installation instructions:
 
