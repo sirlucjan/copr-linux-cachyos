@@ -4,6 +4,8 @@
 # bieszczaders <zbyszek@linux.pl>
 # https://copr.fedorainfracloud.org/coprs/bieszczaders/
 
+%define _disable_source_fetch 0
+
 Name:           bore-sysctl
 Summary:        Userspace KSM helper daemon (CachyOS branding)
 Version:        1.0.5
