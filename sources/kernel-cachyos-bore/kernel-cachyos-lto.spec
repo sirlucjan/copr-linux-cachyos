@@ -304,10 +304,6 @@ scripts/config -d DEBUG_PREEMPT
 scripts/config -d GENERIC_CPU
 scripts/config -e GENERIC_CPU3
 
-# Set performance governor
-scripts/config -d CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
-scripts/config -e CPU_FREQ_DEFAULT_GOV_PERFORMANCE
-
 # Set O3
 scripts/config -d CC_OPTIMIZE_FOR_PERFORMANCE
 scripts/config -e CC_OPTIMIZE_FOR_PERFORMANCE_O3
