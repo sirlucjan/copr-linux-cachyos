@@ -48,10 +48,11 @@ Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
 Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
 #Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
-Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-eevdf/config
+Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos/config
 # Stable patches
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
-Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
+Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-sched-ext.patch
+Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy-ext.patch
 # Dev patches
 #Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
 #Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
@@ -234,8 +235,11 @@ This meta package is used to install matching core and devel packages for a give
 # Apply CachyOS patch
 patch -p1 -i %{PATCH0}
 
-# Apply EEVDF and BORE patches
+# Apply sched-ext patch
 patch -p1 -i %{PATCH1}
+
+# Apply EEVDF and BORE patches
+patch -p1 -i %{PATCH2}
 
 # Fetch the config and move it to the proper directory
 cp %{SOURCE1} .config
