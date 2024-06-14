@@ -254,6 +254,18 @@ scripts/config -e CACHY
 # Enable BORE Scheduler
 scripts/config -e SCHED_BORE
 
+# Enable sched-ext
+scripts/config -e SCHED_CLASS_EXT
+scripts/config -e BPF
+scripts/config -e BPF_EVENTS
+scripts/config -e BPF_JIT
+scripts/config -e BPF_SYSCALL
+scripts/config -e DEBUG_INFO
+scripts/config -e DEBUG_INFO_BTF
+scripts/config -e DEBUG_INFO_BTF_MODULES
+scripts/config -e FTRACE
+scripts/config -e PAHOLE_HAS_SPLIT_BTF
+
 # Setting tick rate
 scripts/config -d HZ_300
 scripts/config -e HZ_1000
@@ -273,12 +285,8 @@ scripts/config -e DEFAULT_FQ
 scripts/config --set-str DEFAULT_NET_SCH fq
 
 # Disable DEBUG
-scripts/config -d DEBUG_INFO
-scripts/config -d DEBUG_INFO_BTF
 scripts/config -d DEBUG_INFO_DWARF4
 scripts/config -d DEBUG_INFO_DWARF5
-scripts/config -d PAHOLE_HAS_SPLIT_BTF
-scripts/config -d DEBUG_INFO_BTF_MODULES
 scripts/config -d SLUB_DEBUG
 scripts/config -d PM_DEBUG
 scripts/config -d PM_ADVANCED_DEBUG
