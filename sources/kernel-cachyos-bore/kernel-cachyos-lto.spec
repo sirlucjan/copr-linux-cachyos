@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 %define _stablekver 4
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 2
 %define flaver cb%{customver}
 
 Release:%{flaver}.0.lto%{?dist}
@@ -265,6 +265,8 @@ scripts/config -e DEBUG_INFO_BTF
 scripts/config -e DEBUG_INFO_BTF_MODULES
 scripts/config -e FTRACE
 scripts/config -e PAHOLE_HAS_SPLIT_BTF
+scripts/config -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
+scripts/config -e SCHED_DEBUG
 
 # Setting tick rate
 scripts/config -d HZ_300
@@ -285,14 +287,11 @@ scripts/config -e DEFAULT_FQ
 scripts/config --set-str DEFAULT_NET_SCH fq
 
 # Disable DEBUG
-scripts/config -d DEBUG_INFO_DWARF4
-scripts/config -d DEBUG_INFO_DWARF5
 scripts/config -d SLUB_DEBUG
 scripts/config -d PM_DEBUG
 scripts/config -d PM_ADVANCED_DEBUG
 scripts/config -d PM_SLEEP_DEBUG
 scripts/config -d ACPI_DEBUG
-scripts/config -d SCHED_DEBUG
 scripts/config -d LATENCYTOP
 scripts/config -d DEBUG_PREEMPT
 
