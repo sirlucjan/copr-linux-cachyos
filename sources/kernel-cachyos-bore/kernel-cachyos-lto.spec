@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 %define _stablekver 4
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 2
+%define customver 3
 %define flaver cb%{customver}
 
 Release:%{flaver}.0.lto%{?dist}
@@ -350,7 +350,11 @@ scripts/config --set-str BUILD_SALT "%{kverstr}"
 
 # Finalize the patched config
 #make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} oldconfig
+%if %{llvm_kbuild}
+make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
+%else
 make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
+%endif
 
 # Save configuration for later reuse
 cat .config > config-linux-bore
