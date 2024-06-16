@@ -208,7 +208,6 @@ This meta package is used to install matching core and devel packages for a give
 
 %prep
 %setup -q -n linux-%{_basekver}.%{_stablekver}
-#%setup -q -n linux-%{_basekver}
 
 # Apply CachyOS patch
 patch -p1 -i %{PATCH0}
