@@ -18,6 +18,7 @@ This is a port of the CachyOS kernel for Fedora.
 - OpenRGB and ACS Override support.
 - HDR Patches for AMD GPU's and gamescope.
 - Default support for Steam Deck.
+- Sched-ext scheduler support. Installation instructions can be found [here](https://copr.fedorainfracloud.org/coprs/bieszczaders/kernel-cachyos-addons).
 
 ### Installation instructions:
 
