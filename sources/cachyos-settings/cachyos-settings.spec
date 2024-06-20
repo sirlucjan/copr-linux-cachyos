@@ -1,7 +1,7 @@
 %define _disable_source_fetch 0
 
 Name:           cachyos-settings
-Release:        6%{?dist}
+Release:        7%{?dist}
 Version:	    1.0.0
 Summary:        CachyOS-Settings ported to Fedora
 License:        GPLv3
@@ -11,6 +11,7 @@ BuildRequires:  git
 Requires: zram-generator
 
 Provides: zram-generator-defaults
+Provides: kerver
 Obsoletes: zram-generator-defaults
 Obsoletes: bore-sysctl
 Obsoletes: kerver
