@@ -25,6 +25,10 @@
 # whether to build kernel with llvm compiler(clang)
 %define llvm_kbuild 1
 
+# whether to build nvidia-open modules
+%define _nv_ver 555.52.04
+%define _nv_open_pkg open-gpu-kernel-modules-%{_nv_ver}
+
 %define flavor cachyos-lto
 Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
@@ -33,7 +37,7 @@ Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 %define _stablekver 6
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 7
 %define flaver cb%{customver}
 
 Release:%{flaver}.0.lto%{?dist}
@@ -49,10 +53,13 @@ URL: https://cachyos.org
 Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.%{_stablekver}.tar.xz
 #Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_basekver}.tar.xz
 Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos/config
+# Source2: https://github.com/NVIDIA/open-gpu-kernel-modules/archive/%{_nv_ver}/%{_nv_open_pkg}.tar.gz
 # Stable patches
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
 Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-sched-ext.patch
 Patch2: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy-ext.patch
+Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/nvidia/make-modeset-fbdev-default.patch
+Patch4: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/nvidia/nvidia-open-gcc-ibt-sls.patch
 # Dev patches
 #Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
 #Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
@@ -62,7 +69,7 @@ BuildRequires: python3-devel
 BuildRequires: make
 BuildRequires: perl-generators
 BuildRequires: perl-interpreter
-BuildRequires: openssl-devel 
+BuildRequires: openssl-devel
 BuildRequires: bison
 BuildRequires: flex
 BuildRequires: findutils
@@ -92,7 +99,7 @@ BuildRequires: libkcapi-hmaccalc
 BuildRequires: perl-Carp
 BuildRequires: rsync
 BuildRequires: grubby
-BuildRequires: wget 
+BuildRequires: wget
 BuildRequires: gcc
 %if %{llvm_kbuild}
 BuildRequires: llvm
@@ -161,6 +168,17 @@ Obsoletes: kernel-cachyos-bore-modules <= 6.5.10-cb1
 %description modules
 This package provides kernel modules for the core %{?flavor:%{flavor}} kernel package.
 
+%package nvidia-open
+Summary: Prebuilt nvidia-open kernel modules to match the core kernel
+Group: System Environment/Kernel
+Provides: kmod-nvidia-%{kverstr}
+Obsoletes: kmod-nvidia-%{kverstr}
+Obsoletes: akmod-nvidia
+Requires: kernel-cachyos-core-lto = %{rpmver}
+Requires: xorg-x11-drv-nvidia
+%description nvidia-open
+This package provides prebuilt nvidia-open kernel modules for the core %{?flavor:%{flavor}} kernel package.
+
 %package headers
 Summary: Header files for the Linux kernel for use by glibc
 Group: Development/System
@@ -184,7 +202,7 @@ glibc package.
 Summary: Development package for building kernel modules to match the %{?flavor:%{flavor}} kernel
 Group: System Environment/Kernel
 AutoReqProv: no
-Requires: findutils      
+Requires: findutils
 Requires: perl-interpreter
 Requires: openssl-devel
 Requires: flex
@@ -231,6 +249,7 @@ This meta package is used to install matching core and devel packages for a give
 %prep
 %setup -q -n linux-%{_basekver}.%{_stablekver}
 
+git clone -b %{_nv_ver} https://github.com/NVIDIA/open-gpu-kernel-modules/ %{_sourcedir}/%{_nv_open_pkg}
 # Apply CachyOS patch
 patch -p1 -i %{PATCH0}
 
@@ -239,6 +258,10 @@ patch -p1 -i %{PATCH1}
 
 # Apply EEVDF and BORE patches
 patch -p1 -i %{PATCH2}
+
+# Apply patches for nvidia-open package
+patch -p1 -i %{PATCH3} -d %{_sourcedir}/%{_nv_open_pkg}/kernel-open
+patch -p1 --no-backup-if-mismatch -i %{PATCH4} -d %{_sourcedir}/%{_nv_open_pkg}
 
 # Fetch the config and move it to the proper directory
 cp %{SOURCE1} .config
@@ -342,7 +365,7 @@ scripts/config -e HAVE_GCC_PLUGINS
 scripts/config -u DEFAULT_HOSTNAME
 
 # Enable SELinux (https://github.com/sirlucjan/copr-linux-cachyos/pull/1)
-scripts/config --set-str CONFIG_LSM “lockdown,yama,integrity,selinux,bpf,landlock”
+scripts/config --set-str CONFIG_LSM â€œlockdown,yama,integrity,selinux,bpf,landlockâ€
 
 # Set kernel version string as build salt
 scripts/config --set-str BUILD_SALT "%{kverstr}"
@@ -367,6 +390,9 @@ make %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 gcc ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 %endif
 
+cd %{_sourcedir}/%{_nv_open_pkg}
+CFLAGS= CXXFLAGS= LDFLAGS= make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 KERNEL_UNAME=%{kverstr} IGNORE_PREEMPT_RT_PRESENCE=1 IGNORE_CC_MISMATCH=yes SYSSRC=%{_builddir}/linux-%{_basekver}.%{_stablekver} SYSOUT=%{_builddir}/linux-%{_basekver}.%{_stablekver} %{?_smp_mflags} modules
+
 %install
 
 ImageName=$(make image_name | tail -n 1)
@@ -378,6 +404,13 @@ chmod 755 %{buildroot}/boot/vmlinuz-%{kverstr}
 
 ZSTD_CLEVEL=19 make %{?_smp_mflags} INSTALL_MOD_PATH=%{buildroot} INSTALL_MOD_STRIP=1 modules_install mod-fw=
 make %{?_smp_mflags} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
+
+# Le nvidia-open
+cd %{_sourcedir}/%{_nv_open_pkg}
+install -dm755 "%{buildroot}/lib/modules/%{kverstr}/extra"
+install -m644 kernel-open/*.ko "%{buildroot}/lib/modules/%{kverstr}/extra"
+install -Dt "%{buildroot}/usr/share/licenses/nvidia-open" -m644 COPYING
+find "%{buildroot}" -name '*.ko' -exec zstd --rm -10 {} +
 
 # prepare -devel files
 ### all of the things here are derived from the Fedora kernel.spec
@@ -395,6 +428,7 @@ mkdir -p %{buildroot}/lib/modules/%{kverstr}/weak-updates
 find . -name *.h.s -delete
 # first copy everything
 cp --parents `find  -type f -name "Makefile*" -o -name "Kconfig*"` %{buildroot}/lib/modules/%{kverstr}/build
+cd -
 if [ ! -e Module.symvers ]; then
 touch Module.symvers
 fi
@@ -678,6 +712,10 @@ fi
 %exclude /lib/modules/%{kverstr}/symvers.gz
 %exclude /lib/modules/%{kverstr}/build
 %exclude /lib/modules/%{kverstr}/source
+
+%files nvidia-open
+%dir /lib/modules/%{kverstr}/extra
+/usr/share/licenses/nvidia-open/COPYING
 
 %files headers
 %defattr (-, root, root)
