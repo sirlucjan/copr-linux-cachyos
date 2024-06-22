@@ -407,8 +407,8 @@ make %{?_smp_mflags} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
 
 # Le nvidia-open
 cd %{_sourcedir}/%{_nv_open_pkg}
-install -dm755 "%{buildroot}/lib/modules/%{kverstr}/extra"
-install -m644 kernel-open/*.ko "%{buildroot}/lib/modules/%{kverstr}/extra"
+install -dm755 "%{buildroot}/lib/modules/%{kverstr}/extra/nvidia"
+install -m644 kernel-open/*.ko "%{buildroot}/lib/modules/%{kverstr}/extra/nvidia"
 install -Dt "%{buildroot}/usr/share/licenses/nvidia-open" -m644 COPYING
 find "%{buildroot}" -name '*.ko' -exec zstd --rm -10 {} +
 
@@ -714,7 +714,7 @@ fi
 %exclude /lib/modules/%{kverstr}/source
 
 %files nvidia-open
-%dir /lib/modules/%{kverstr}/extra
+%dir /lib/modules/%{kverstr}/extra/nvidia
 /usr/share/licenses/nvidia-open/COPYING
 
 %files headers
