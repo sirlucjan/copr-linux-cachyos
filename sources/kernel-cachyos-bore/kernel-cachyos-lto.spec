@@ -171,11 +171,11 @@ This package provides kernel modules for the core %{?flavor:%{flavor}} kernel pa
 %package nvidia-open
 Summary: Prebuilt nvidia-open kernel modules to match the core kernel
 Group: System Environment/Kernel
-Provides: kmod-nvidia-%{kverstr}
+Provides: nvidia-kmod = %{_nv_ver}
 Obsoletes: kmod-nvidia-%{kverstr}
 Obsoletes: akmod-nvidia
 Requires: kernel-cachyos-core-lto = %{rpmver}
-Requires: xorg-x11-drv-nvidia
+Requires: xorg-x11-drv-nvidia = %{_nv_ver}
 %description nvidia-open
 This package provides prebuilt nvidia-open kernel modules for the core %{?flavor:%{flavor}} kernel package.
 
