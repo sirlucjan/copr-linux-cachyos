@@ -24,9 +24,13 @@
 
 # whether to build kernel with llvm compiler(clang)
 %define llvm_kbuild 0
+%if %{llvm_kbuild}
+%define llvm_build_env_vars CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1
+%define ltoflavor 1
+%endif
 
 %define flavor cachyos
-Name: kernel%{?flavor:-%{flavor}}
+Name: kernel%{?flavor:-%{flavor}}%{?ltoflavor:-lto}
 Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 
 %define _basekver 6.9
@@ -36,7 +40,7 @@ Version: %{_basekver}.%{_stablekver}
 %define customver 1
 %define flaver cb%{customver}
 
-Release:%{flaver}.0%{?dist}
+Release:%{flaver}.0%{?ltoflavor:.lto}%{?dist}
 
 %define rpmver %{version}-%{release}
 %define krelstr %{release}.%{_arch}
@@ -349,21 +353,16 @@ scripts/config --set-str BUILD_SALT "%{kverstr}"
 
 # Finalize the patched config
 #make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} oldconfig
-%if %{llvm_kbuild}
-make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
-%else
-make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
-%endif
+make %{?_smp_mflags} %{?llvm_build_env_vars} EXTRAVERSION=-%{krelstr} olddefconfig
 
 # Save configuration for later reuse
 cat .config > config-linux-bore
 
 %build
+make %{?_smp_mflags} %{?llvm_build_env_vars} EXTRAVERSION=-%{krelstr}
 %if %{llvm_kbuild}
-make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 clang ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 %else
-make %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 gcc ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 %endif
 
@@ -376,8 +375,8 @@ mkdir -p %{buildroot}/boot
 cp -v $ImageName %{buildroot}/boot/vmlinuz-%{kverstr}
 chmod 755 %{buildroot}/boot/vmlinuz-%{kverstr}
 
-ZSTD_CLEVEL=19 make %{?_smp_mflags} INSTALL_MOD_PATH=%{buildroot} INSTALL_MOD_STRIP=1 modules_install mod-fw=
-make %{?_smp_mflags} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
+ZSTD_CLEVEL=19 make %{?_smp_mflags} %{?llvm_build_env_vars} INSTALL_MOD_PATH=%{buildroot} INSTALL_MOD_STRIP=1 modules_install mod-fw=
+make %{?_smp_mflags} %{?llvm_build_env_vars} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
 
 # prepare -devel files
 ### all of the things here are derived from the Fedora kernel.spec
