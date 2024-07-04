@@ -2,7 +2,7 @@
 
 Name:           sched-ext-scx
 Version:        0.1.10
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Sched_ext Schedulers and Tools
 
 License:        GPL=2.0
