@@ -37,7 +37,7 @@ Summary: The Linux Kernel with Cachyos-BORE-EEVDF Patches
 %define _stablekver 8
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 2
 %define flaver cb%{customver}
 
 Release:%{flaver}.0%{?ltoflavor:.lto}%{?dist}
@@ -282,12 +282,6 @@ scripts/config -d DEFAULT_CUBIC
 scripts/config -e TCP_CONG_BBR
 scripts/config -e DEFAULT_BBR
 scripts/config --set-str DEFAULT_TCP_CONG bbr
-# Switch into FQ - bbr3 doesn't work properly with FQ_CODEL
-scripts/config -m NET_SCH_FQ_CODEL
-scripts/config -e NET_SCH_FQ
-scripts/config -d DEFAULT_FQ_CODEL
-scripts/config -e DEFAULT_FQ
-scripts/config --set-str DEFAULT_NET_SCH fq
 
 # Disable DEBUG
 scripts/config -d SLUB_DEBUG
