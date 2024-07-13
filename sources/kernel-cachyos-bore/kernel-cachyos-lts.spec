@@ -30,7 +30,7 @@ Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-LTS Patches
 
 %define _basekver 6.6
-%define _stablekver 37
+%define _stablekver 39
 Version: %{_basekver}.%{_stablekver}
 
 %define customver 2
@@ -308,7 +308,7 @@ scripts/config -e HAVE_GCC_PLUGINS
 scripts/config -u DEFAULT_HOSTNAME
 
 # Enable SELinux (https://github.com/sirlucjan/copr-linux-cachyos/pull/1)
-scripts/config --set-str CONFIG_LSM “lockdown,yama,integrity,selinux,bpf,landlock”
+scripts/config --set-str CONFIG_LSM lockdown,yama,integrity,selinux,bpf,landlock
 
 # Set kernel version string as build salt
 scripts/config --set-str BUILD_SALT "%{kverstr}"
