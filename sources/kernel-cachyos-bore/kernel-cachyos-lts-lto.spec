@@ -30,10 +30,10 @@ Name: kernel%{?flavor:-%{flavor}}
 Summary: The Linux Kernel with Cachyos-LTS Patches built with Clang LTO
 
 %define _basekver 6.6
-%define _stablekver 39
+%define _stablekver 40
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 2
+%define customver 1
 %define flaver clts%{customver}
 
 Release:%{flaver}.0.lto%{?dist}
