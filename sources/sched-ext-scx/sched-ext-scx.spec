@@ -1,8 +1,8 @@
 %define _disable_source_fetch 0
 
 Name:           sched-ext-scx
-Version:        0.1.10
-Release:        3%{?dist}
+Version:        1.0.1
+Release:        1%{?dist}
 Summary:        Sched_ext Schedulers and Tools
 
 License:        GPL=2.0
