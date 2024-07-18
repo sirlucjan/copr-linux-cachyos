@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-LTS Patches
 %define _stablekver 40
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 1
+%define customver 2
 %define flaver clts%{customver}
 
 Release:%{flaver}.0%{?dist}
@@ -52,6 +52,8 @@ Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-ca
 # Stable patches
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
 Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
+# Patch to fix kernel builds on rawhide
+Patch10: https://raw.githubusercontent.com/sirlucjan/copr-linux-cachyos/master/sources/kernel-patches/%{_basekver}/fix-rawhide.patch
 # Dev patches
 #Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all-dev.patch
 #Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched-dev/0001-bore-cachy.patch
@@ -214,6 +216,11 @@ patch -p1 -i %{PATCH0}
 
 # Apply EEVDF and BORE patches
 patch -p1 -i %{PATCH1}
+
+# Apply patch to fix kernel builds on rawhide
+%if 0%{?fedora} >= 41
+patch -p1 -i %{PATCH10}
+%endif
 
 # Fetch the config and move it to the proper directory
 cp %{SOURCE1} .config
