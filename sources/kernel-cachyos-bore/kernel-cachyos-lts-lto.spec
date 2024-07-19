@@ -226,7 +226,7 @@ scripts/config -u LOCALVERSION
 scripts/config -e CACHY
 
 # Enable BORE Scheduler
-scripts/config -e SCHED_BORE
+scripts/config -e SCHED_BORE --set-val MIN_BASE_SLICE_NS 1000000
 
 # Setting tick rate
 scripts/config -d HZ_300
