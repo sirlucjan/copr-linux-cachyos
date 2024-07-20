@@ -33,7 +33,7 @@ Summary: The Linux Kernel with Cachyos-LTS Patches
 %define _stablekver 41
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 2
+%define customver 3
 %define flaver clts%{customver}
 
 Release:%{flaver}.0%{?dist}
