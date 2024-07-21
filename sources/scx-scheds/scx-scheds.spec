@@ -18,16 +18,12 @@ BuildRequires:  rust
 BuildRequires:  clang >= 17
 BuildRequires:  llvm >= 17
 BuildRequires:  lld >= 17
-BuildRequires:  bpftool
-BuildRequires:  libbpf >= 1.3
-BuildRequires:  libbpf-devel >= 1.3
 BuildRequires:  elfutils-libelf
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  zlib
 BuildRequires:  jq
 BuildRequires:  jq-devel
 BuildRequires:  systemd
-Requires:  libbpf
 Requires:  elfutils-libelf
 Requires:  zlib
 Requires:  jq
