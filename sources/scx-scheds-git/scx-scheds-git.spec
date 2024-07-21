@@ -1,13 +1,18 @@
+%global _default_patch_fuzz 2
+%global commitdate 20240721
+%global commit af75d147c88077cc954100edc17bc1f01f31f85f
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 %define _disable_source_fetch 0
 
-Name:           scx-scheds
+Name:           scx-scheds-git
 Version:        1.0.1
-Release:        1%{?dist}
+Release:        1.%{commitdate}.git.%{shortcommit}%{?dist}
 Summary:        Sched_ext Schedulers and Tools
 
 License:        GPL=2.0
 URL:            https://github.com/sched-ext/scx
-Source0:        %{URL}/archive/refs/tags/v%{version}.tar.gz
+Source0:        %{URL}/archive/%{commit}/scx-%{commit}.tar.gz
 
 BuildRequires:  gcc
 BuildRequires:  git
@@ -27,14 +32,14 @@ BuildRequires:  systemd
 Requires:  elfutils-libelf
 Requires:  zlib
 Requires:  jq
-Conflicts: scx-scheds-git
-Obsoletes: sched-ext-scx
+Conflicts: scx-scheds
+Obsoletes: sched-ext-scx-git
 
 %description
 sched_ext is a Linux kernel feature which enables implementing kernel thread schedulers in BPF and dynamically loading them. This repository contains various scheduler implementations and support utilities.
 
 %prep
-%autosetup -n scx-%{version}
+%autosetup -p1 -n scx-%{commit}
 
 %build
 %meson \
@@ -49,7 +54,7 @@ sched_ext is a Linux kernel feature which enables implementing kernel thread sch
 
 
 %files
+%attr(0644,root,root) %ghost %config(noreplace) %{_sysconfdir}/default/scx
 %{_bindir}/*
 %{_prefix}/lib/systemd/system/scx.service
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/default/scx
 %{_sysconfdir}/systemd/journald@sched-ext.conf
