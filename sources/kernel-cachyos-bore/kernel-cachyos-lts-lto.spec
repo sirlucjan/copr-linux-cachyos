@@ -628,9 +628,6 @@ fi
 %post modules
 /sbin/depmod -a %{kverstr}
 
-%postun modules
-/sbin/depmod -a %{kverstr}
-
 %files core
 %ghost %attr(0600, root, root) /boot/vmlinuz-%{kverstr}
 %ghost %attr(0600, root, root) /boot/System.map-%{kverstr}
@@ -639,7 +636,6 @@ fi
 %ghost %attr(0644, root, root) /boot/config-%{kverstr}
 /boot/.vmlinuz-%{kverstr}.hmac
 %dir /lib/modules/%{kverstr}/
-%dir /lib/modules/%{kverstr}/kernel/
 /lib/modules/%{kverstr}/.vmlinuz.hmac
 /lib/modules/%{kverstr}/config
 /lib/modules/%{kverstr}/vmlinuz
@@ -647,8 +643,7 @@ fi
 /lib/modules/%{kverstr}/symvers.gz
 
 %files modules
-%defattr (-, root, root)
-/lib/modules/%{kverstr}/*
+/lib/modules/%{kverstr}/
 %exclude /lib/modules/%{kverstr}/.vmlinuz.hmac
 %exclude /lib/modules/%{kverstr}/config
 %exclude /lib/modules/%{kverstr}/vmlinuz
