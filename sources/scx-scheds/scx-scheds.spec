@@ -1,8 +1,8 @@
 %define _disable_source_fetch 0
 
-Name:           sched-ext-scx
+Name:           scx-scheds
 Version:        1.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Sched_ext Schedulers and Tools
 
 License:        GPL=2.0
@@ -18,19 +18,18 @@ BuildRequires:  rust
 BuildRequires:  clang >= 17
 BuildRequires:  llvm >= 17
 BuildRequires:  lld >= 17
-BuildRequires:  bpftool
-BuildRequires:  libbpf >= 1.3
-BuildRequires:  libbpf-devel >= 1.3
 BuildRequires:  elfutils-libelf
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  zlib
 BuildRequires:  jq
 BuildRequires:  jq-devel
 BuildRequires:  systemd
-Requires:  libbpf
 Requires:  elfutils-libelf
 Requires:  zlib
 Requires:  jq
+Conflicts: scx-scheds-git
+Obsoletes: sched-ext-scx < %{version}-%{release}
+Provides:  sched-ext-scx = %{version}-%{release}
 
 %description
 sched_ext is a Linux kernel feature which enables implementing kernel thread schedulers in BPF and dynamically loading them. This repository contains various scheduler implementations and support utilities.
