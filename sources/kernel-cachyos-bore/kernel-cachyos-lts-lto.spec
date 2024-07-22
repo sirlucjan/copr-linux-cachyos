@@ -24,10 +24,14 @@
 
 # whether to build kernel with llvm compiler(clang)
 %define llvm_kbuild 1
+%if %{llvm_kbuild}
+%define llvm_build_env_vars CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1
+%define ltoflavor 1
+%endif
 
-%define flavor cachyos-lts-lto
-Name: kernel%{?flavor:-%{flavor}}
-Summary: The Linux Kernel with Cachyos-LTS Patches built with Clang LTO
+%define flavor cachyos-lts
+Name: kernel%{?flavor:-%{flavor}}%{?ltoflavor:-lto}
+Summary: The Linux Kernel with Cachyos-LTS Patches
 
 %define _basekver 6.6
 %define _stablekver 41
@@ -42,7 +46,7 @@ Version: %{_basekver}.%{_stablekver}
 %define customver 3
 %define flaver clts%{customver}
 
-Release:%{flaver}.0.lto%{?dist}
+Release:%{flaver}.0%{?ltoflavor:.lto}%{?dist}
 
 %define rpmver %{version}-%{release}
 %define krelstr %{release}.%{_arch}
@@ -68,7 +72,7 @@ BuildRequires: python3-devel
 BuildRequires: make
 BuildRequires: perl-generators
 BuildRequires: perl-interpreter
-BuildRequires: openssl-devel 
+BuildRequires: openssl-devel
 BuildRequires: bison
 BuildRequires: flex
 BuildRequires: findutils
@@ -98,7 +102,7 @@ BuildRequires: libkcapi-hmaccalc
 BuildRequires: perl-Carp
 BuildRequires: rsync
 BuildRequires: grubby
-BuildRequires: wget 
+BuildRequires: wget
 BuildRequires: gcc
 %if %{llvm_kbuild}
 BuildRequires: llvm
@@ -176,7 +180,7 @@ glibc package.
 Summary: Development package for building kernel modules to match the %{?flavor:%{flavor}} kernel
 Group: System Environment/Kernel
 AutoReqProv: no
-Requires: findutils      
+Requires: findutils
 Requires: perl-interpreter
 Requires: openssl-devel
 Requires: flex
@@ -276,10 +280,6 @@ scripts/config -d DEBUG_PREEMPT
 scripts/config -d GENERIC_CPU
 scripts/config -e GENERIC_CPU2
 
-# Set performance governor
-scripts/config -d CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
-scripts/config -e CPU_FREQ_DEFAULT_GOV_PERFORMANCE
-
 # Set O3
 scripts/config -d CC_OPTIMIZE_FOR_PERFORMANCE
 scripts/config -e CC_OPTIMIZE_FOR_PERFORMANCE_O3
@@ -327,21 +327,16 @@ scripts/config --set-str BUILD_SALT "%{kverstr}"
 
 # Finalize the patched config
 #make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} oldconfig
-%if %{llvm_kbuild}
-make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
-%else
-make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
-%endif
+make %{?_smp_mflags} %{?llvm_build_env_vars} EXTRAVERSION=-%{krelstr} olddefconfig
 
 # Save configuration for later reuse
 cat .config > config-linux-bore
 
 %build
+make %{?_smp_mflags} %{?llvm_build_env_vars} EXTRAVERSION=-%{krelstr}
 %if %{llvm_kbuild}
-make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 clang ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 %else
-make %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 gcc ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 %endif
 

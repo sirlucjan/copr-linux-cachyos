@@ -24,9 +24,13 @@
 
 # whether to build kernel with llvm compiler(clang)
 %define llvm_kbuild 0
+%if %{llvm_kbuild}
+%define llvm_build_env_vars CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1
+%define ltoflavor 1
+%endif
 
 %define flavor cachyos-lts
-Name: kernel%{?flavor:-%{flavor}}
+Name: kernel%{?flavor:-%{flavor}}%{?ltoflavor:-lto}
 Summary: The Linux Kernel with Cachyos-LTS Patches
 
 %define _basekver 6.6
@@ -42,7 +46,7 @@ Version: %{_basekver}.%{_stablekver}
 %define customver 3
 %define flaver clts%{customver}
 
-Release:%{flaver}.0%{?dist}
+Release:%{flaver}.0%{?ltoflavor:.lto}%{?dist}
 
 %define rpmver %{version}-%{release}
 %define krelstr %{release}.%{_arch}
@@ -276,10 +280,6 @@ scripts/config -d DEBUG_PREEMPT
 scripts/config -d GENERIC_CPU
 scripts/config -e GENERIC_CPU2
 
-# Set performance governor
-scripts/config -d CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
-scripts/config -e CPU_FREQ_DEFAULT_GOV_PERFORMANCE
-
 # Set O3
 scripts/config -d CC_OPTIMIZE_FOR_PERFORMANCE
 scripts/config -e CC_OPTIMIZE_FOR_PERFORMANCE_O3
@@ -327,21 +327,16 @@ scripts/config --set-str BUILD_SALT "%{kverstr}"
 
 # Finalize the patched config
 #make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} oldconfig
-%if %{llvm_kbuild}
-make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
-%else
-make %{?_smp_mflags} EXTRAVERSION=-%{krelstr} olddefconfig
-%endif
+make %{?_smp_mflags} %{?llvm_build_env_vars} EXTRAVERSION=-%{krelstr} olddefconfig
 
 # Save configuration for later reuse
 cat .config > config-linux-bore
 
 %build
+make %{?_smp_mflags} %{?llvm_build_env_vars} EXTRAVERSION=-%{krelstr}
 %if %{llvm_kbuild}
-make CC=clang CXX=clang++ LD=ld.lld LLVM=1 LLVM_IAS=1 %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 clang ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 %else
-make %{?_smp_mflags} EXTRAVERSION=-%{krelstr}
 gcc ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 %endif
 
