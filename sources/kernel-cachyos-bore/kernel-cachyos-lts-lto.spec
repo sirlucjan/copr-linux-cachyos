@@ -29,6 +29,11 @@
 %define ltoflavor 1
 %endif
 
+# Build nvidia-open alongside the kernel
+%define _nv_build 1
+%define _nv_ver 555.58.02
+%define _nv_open_pkg open-gpu-kernel-modules-%{_nv_ver}
+
 %define flavor cachyos-lts
 Name: kernel%{?flavor:-%{flavor}}%{?ltoflavor:-lto}
 Summary: The Linux Kernel with Cachyos-LTS Patches
@@ -43,7 +48,7 @@ Summary: The Linux Kernel with Cachyos-LTS Patches
 
 Version: %{_basekver}.%{_stablekver}
 
-%define customver 3
+%define customver 4
 %define flaver clts%{customver}
 
 Release:%{flaver}.0%{?ltoflavor:.lto}%{?dist}
@@ -58,9 +63,12 @@ Vendor: The Linux Community and CachyOS maintainer(s)
 URL: https://cachyos.org
 Source0: https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{_tarkver}.tar.xz
 Source1: https://raw.githubusercontent.com/CachyOS/linux-cachyos/master/linux-cachyos-lts/config
+Source2: https://github.com/NVIDIA/open-gpu-kernel-modules/archive/%{_nv_ver}/%{_nv_open_pkg}.tar.gz
 # Stable patches
 Patch0: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/all/0001-cachyos-base-all.patch
 Patch1: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/sched/0001-bore-cachy.patch
+Patch3: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/nvidia/make-modeset-fbdev-default.patch
+Patch4: https://raw.githubusercontent.com/CachyOS/kernel-patches/master/%{_basekver}/misc/nvidia/gsp-fix-stutter.patch
 # Patch to fix kernel builds on rawhide
 Patch10: https://raw.githubusercontent.com/sirlucjan/copr-linux-cachyos/master/sources/kernel-patches/%{_basekver}/fix-rawhide.patch
 # Dev patches
@@ -104,6 +112,7 @@ BuildRequires: rsync
 BuildRequires: grubby
 BuildRequires: wget
 BuildRequires: gcc
+BuildRequires: gcc-c++
 %if %{llvm_kbuild}
 BuildRequires: llvm
 BuildRequires: clang
@@ -159,6 +168,19 @@ Provides: %{name}-modules-%{rpmver} = %{kverstr}
 Supplements: %{name} = %{rpmver}
 %description modules
 This package provides kernel modules for the core %{?flavor:%{flavor}} kernel package.
+
+%package nvidia-open
+Summary: Prebuilt nvidia-open kernel modules to match the core kernel
+Group: System Environment/Kernel
+Requires: %{name}-core-%{rpmver} = %{kverstr}
+Requires: %{name}-modules-%{rpmver} = %{kverstr}
+Provides: %{name}%{_basekver} = %{rpmver}
+Provides: nvidia-kmod >= %{_nv_ver}
+Provides: installonlypkg(kernel-module)
+Conflicts: akmod-nvidia
+Recommends: xorg-x11-drv-nvidia >= %{_nv_ver}
+%description nvidia-open
+This package provides prebuilt nvidia-open kernel modules for the core %{?flavor:%{flavor}} kernel package.
 
 %package headers
 Summary: Header files for the Linux kernel for use by glibc
@@ -220,6 +242,8 @@ This meta package is used to install matching core and devel packages for a give
 %prep
 %setup -q -n linux-%{_tarkver}
 
+tar -xzf %{SOURCE2} -C %{_builddir}
+
 # Apply CachyOS patch
 patch -p1 -i %{PATCH0}
 
@@ -230,6 +254,10 @@ patch -p1 -i %{PATCH1}
 %if 0%{?fedora} >= 41
 patch -p1 -i %{PATCH10}
 %endif
+
+# Apply patches for nvidia-open
+patch -p1 -i %{PATCH3} -d %{_builddir}/%{_nv_open_pkg}/kernel-open
+patch -p1 -i %{PATCH4} -d %{_builddir}/%{_nv_open_pkg}/
 
 # Fetch the config and move it to the proper directory
 cp %{SOURCE1} .config
@@ -340,6 +368,11 @@ clang ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 gcc ./scripts/sign-file.c -o ./scripts/sign-file -lssl -lcrypto
 %endif
 
+%if %{_nv_build}
+cd %{_builddir}/%{_nv_open_pkg}
+CFLAGS= CXXFLAGS= LDFLAGS= make %{?llvm_build_env_vars} KERNEL_UNAME=%{kverstr} IGNORE_PREEMPT_RT_PRESENCE=1 IGNORE_CC_MISMATCH=yes SYSSRC=%{_builddir}/linux-%{_tarkver} SYSOUT=%{_builddir}/linux-%{_tarkver} %{?_smp_mflags} modules
+%endif
+
 %install
 
 ImageName=$(make image_name | tail -n 1)
@@ -352,10 +385,19 @@ chmod 755 %{buildroot}/boot/vmlinuz-%{kverstr}
 ZSTD_CLEVEL=19 make %{?_smp_mflags} INSTALL_MOD_PATH=%{buildroot} modules_install mod-fw=
 make %{?_smp_mflags} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
 
+%if %{_nv_build}
+cd %{_builddir}/%{_nv_open_pkg}
+install -dm755 "%{buildroot}/lib/modules/%{kverstr}/nvidia"
+install -m644 kernel-open/*.ko "%{buildroot}/lib/modules/%{kverstr}/nvidia"
+install -Dt "%{buildroot}/usr/share/licenses/nvidia-open" -m644 COPYING
+find "%{buildroot}" -name '*.ko' -exec zstd --rm -19 {} +
+%endif
+
 # prepare -devel files
 ### all of the things here are derived from the Fedora kernel.spec
 ### see
 ##### https://src.fedoraproject.org/rpms/kernel/blob/rawhide/f/kernel.spec
+cd %{_builddir}/linux-%{_tarkver}
 rm -f %{buildroot}/lib/modules/%{kverstr}/build
 rm -f %{buildroot}/lib/modules/%{kverstr}/source
 mkdir -p %{buildroot}/lib/modules/%{kverstr}/build
@@ -623,6 +665,9 @@ fi
 %post modules
 /sbin/depmod -a %{kverstr}
 
+%posttrans nvidia-open
+/sbin/depmod -a %{kverstr}
+
 %files core
 %ghost %attr(0600, root, root) /boot/vmlinuz-%{kverstr}
 %ghost %attr(0600, root, root) /boot/System.map-%{kverstr}
@@ -646,6 +691,11 @@ fi
 %exclude /lib/modules/%{kverstr}/symvers.gz
 %exclude /lib/modules/%{kverstr}/build
 %exclude /lib/modules/%{kverstr}/source
+%exclude /lib/modules/%{kverstr}/nvidia
+
+%files nvidia-open
+/lib/modules/%{kverstr}/nvidia
+/usr/share/licenses/nvidia-open/COPYING
 
 %files headers
 %defattr (-, root, root)
