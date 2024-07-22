@@ -1,3 +1,6 @@
+# Project moved to [new address](https://github.com/CachyOS/copr-linux-cachyos)
+
+
 <div align="center">
  
   <h1 align="center">CachyOS kernel for Fedora</h1>
